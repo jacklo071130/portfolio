@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VBA 指令神助攻 - Cyber Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Fira+Code&display=swap');
+        
+        :root {
+            --neon-pink: #FF2D55;
+            --neon-blue: #00D2FF;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.15);
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background: radial-gradient(circle at top right, #2D1B4E, #0F0F12);
+            background-attachment: fixed;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        /* 霓虹背景裝飾 */
+        .glow-bg {
+            position: fixed;
+            top: -10%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: var(--neon-pink);
+            filter: blur(180px);
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        /* 玻璃擬態 */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .btn-neon {
+            background: var(--neon-pink);
+            box-shadow: 0 0 15px rgba(255, 45, 85, 0.5);
+            transition: all 0.3s ease;
+        }
+        .btn-neon:hover {
+            box-shadow: 0 0 25px rgba(255, 45, 85, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .code-font { font-family: 'Fira Code', monospace; }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+
+        .counter-badge {
+            border: 1px solid var(--neon-pink);
+            color: var(--neon-pink);
+            text-shadow: 0 0 5px var(--neon-pink);
+        }
+    </style>
+</head>
+<body class="pb-20">
+    <div class="glow-bg"></div>
+
+    <!-- Top Right Counter -->
+    <div class="fixed top-6 right-6 z-[60]">
+        <div class="glass-card counter-badge px-4 py-2 rounded-xl flex flex-col items-end">
+            <span class="text-[10px] uppercase tracking-widest opacity-70">Total Commands</span>
+            <span id="total-counter" class="text-2xl font-bold">0</span>
+        </div>
+    </div>
+
+    <!-- Header Section -->
+    <header class="pt-12 pb-8 px-4 text-center sticky top-0 z-50 bg-[#0F0F12]/80 backdrop-blur-md border-b border-white/5">
+        <div class="inline-block relative mb-2">
+            <svg width="50" height="50" viewBox="0 0 100 100">
+                <rect x="20" y="30" width="60" height="50" rx="12" fill="none" stroke="white" stroke-width="2"/>
+                <circle cx="40" cy="55" r="4" fill="#00D2FF" class="animate-pulse"/>
+                <circle cx="60" cy="55" r="4" fill="#00D2FF" class="animate-pulse"/>
+                <circle cx="50" cy="15" r="5" fill="#FF2D55" />
+                <path d="M45 70 Q50 75 55 70" stroke="white" stroke-width="2" fill="none" />
+            </svg>
+        </div>
+        <h1 class="text-2xl font-bold tracking-[0.2em] uppercase">VBA Command DB</h1>
+        
+        <div class="max-w-2xl mx-auto mt-6 relative px-4">
+            <i class="fas fa-search absolute left-8 top-1/2 -translate-y-1/2 text-gray-500"></i>
+            <input type="text" id="search-input" 
+                placeholder="Search command or description..." 
+                class="w-full pl-12 pr-6 py-4 glass-card rounded-2xl outline-none focus:border-[#FF2D55] transition-all text-white">
+        </div>
+
+        <div id="category-tags" class="flex flex-wrap gap-2 mt-6 justify-center max-w-4xl mx-auto">
+            <!-- Categories rendered by JS -->
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 mt-10">
+        <div id="results-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Cards rendered by JS -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="hidden flex flex-col items-center py-20 text-gray-500">
+            <i class="fas fa-terminal text-5xl mb-4 opacity-20"></i>
+            <p class="tracking-widest uppercase">No matching code segments found.</p>
+        </div>
+    </main>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 glass-card px-8 py-3 rounded-full opacity-0 transition-all pointer-events-none border-[#FF2D55]">
+        <span class="text-[#FF2D55] font-bold">COPIED TO CLIPBOARD</span>
+    </div>
+
+    <script>
+        const RAW_DATA = `VBA指令 / 語法,說明,範例程式碼
+Application.ScreenUpdating,關閉或開啟螢幕更新以提高程式執行效率,Application.ScreenUpdating = False
+Application.DisplayAlerts,關閉或開啟 Excel 警告訊息彈出視窗,Application.DisplayAlerts = False
+Application.Calculation,設定計算模式（自動、手動、半自動）,Application.Calculation = xlCalculationManual
+Application.StatusBar,在 Excel 狀態列顯示自訂文字或進度,"Application.StatusBar = ""處理中... 50%"""
+Application.Wait,暫停巨集執行直到指定時間,"Application.Wait (Now + TimeValue(""00:00:02""))"
+Application.OnTime,在特定時間自動執行指定的巨集,"Application.OnTime TimeValue(""17:00:00""), ""MyMacro"""
+Application.EnableEvents,啟用或停用 Excel 事件引發,Application.EnableEvents = False
+Application.Undo,復原使用者在 UI 上執行的最後一次操作,Application.Undo
+Application.Quit,結束 Excel 應用程式,Application.Quit
+Application.WorksheetFunction,在 VBA 中呼叫 Excel 工作表函數,"res = Application.WorksheetFunction.VLookup(1, Range(""A:B""), 2, False)"
+Workbooks.Add,新建一個工作簿,Set wb = Workbooks.Add
+Workbooks.Open,開啟指定路徑的工作簿,"Set wb = Workbooks.Open(""C:\\data.xlsx"")"
+Workbook.Save,儲存目前工作簿,ThisWorkbook.Save
+Workbook.SaveAs,將工作簿另存新檔,"ThisWorkbook.SaveAs ""C:\\backup.xlsx"""
+Workbook.Close,關閉工作簿,ActiveWorkbook.Close SaveChanges:=True
+Workbook.Activate,啟動指定工作簿使其成為焦點,"Workbooks(""Data.xlsx"").Activate"
+Workbook.Protect,保護工作簿結構或視窗,"ThisWorkbook.Protect Password:=""1234"""
+Workbook.Unprotect,解除工作簿保護,"ThisWorkbook.Unprotect Password:=""1234"""
+Workbook.Path,取得工作簿的儲存路徑（唯讀）,p = ThisWorkbook.Path
+Workbook.Name,取得工作簿名稱,n = ThisWorkbook.Name
+Worksheets.Add,新增工作表,Set ws = Worksheets.Add(After:=Worksheets(Worksheets.Count))
+Worksheet.Copy,複製工作表到指定位置,"Worksheets(""Sheet1"").Copy After:=Worksheets(Worksheets.Count)"
+Worksheet.Move,移動工作表位置,"Worksheets(""Sheet1"").Move Before:=Worksheets(1)"
+Worksheet.Delete,刪除指定工作表,"Worksheets(""Temp"").Delete"
+Worksheet.Name,重新命名工作表,"Worksheets(1).Name = ""Summary"""
+Worksheet.Visible,設定工作表顯示、隱藏或深度隱藏,"Worksheets(""Data"").Visible = xlSheetVeryHidden"
+Worksheet.Protect,保護工作表防止修改,"Worksheets(""Sheet1"").Protect Password:=""secret"""
+Worksheet.Unprotect,解除工作表保護,"Worksheets(""Sheet1"").Unprotect Password:=""secret"""
+Worksheet.Activate,將工作表設為作用中工作表,"Worksheets(""Report"").Activate"
+Worksheet.Select,選取指定工作表,"Worksheets(""Sheet1"").Select"
+Range(),參照單一或範圍儲存格,"Range(""A1:B10"").Value = 100"
+Cells(),以行列編號參照儲存格,"Cells(1, 1).Value = ""Header"""
+Range.Value,讀取或寫入儲存格數值,"val = Range(""A1"").Value"
+Range.Text,讀取儲存格顯示的格式化文字,"txt = Range(""A1"").Text"
+Range.Formula,設定或讀取 A1 樣式的公式,"Range(""C1"").Formula = ""=SUM(A1:B1)"""
+Range.FormulaR1C1,設定或讀取 R1C1 樣式的公式,"Range(""C1"").FormulaR1C1 = ""=SUM(RC[-2]:RC[-1])"""
+Range.Copy,複製儲存格範圍,"Range(""A1:A10"").Copy Destination:=Range(""B1"")"
+Range.Cut,剪下儲存格範圍,"Range(""A1"").Cut Destination:=Range(""B1"")"
+Range.PasteSpecial,選擇性貼上（僅貼上值、格式等）,"Range(""B1"").PasteSpecial Paste:=xlPasteValues"
+Range.Clear,清除儲存格的內容與格式,"Range(""A1:D10"").Clear"
+Range.ClearContents,僅清除儲存格內的文字或數值,"Range(""A1:D10"").ClearContents"
+Range.ClearFormats,僅清除儲存格的格式,"Range(""A1:D10"").ClearFormats"
+Range.Select,選取特定儲存格範圍,"Range(""A1:B5"").Select"
+Range.Offset,依指定的列數與欄數位移參照,"Set target = Range(""A1"").Offset(1, 2)"
+Range.Resize,"重設儲存格範圍的大小（列數, 欄數）","Set newRange = Range(""A1"").Resize(10, 5)"
+Range.End,尋找連續範圍的最邊緣儲存格（模擬 Ctrl+方向鍵）,"lastRow = Cells(Rows.Count, 1).End(xlUp).Row"
+Range.CurrentRegion,取得相連的所有非空白儲存格區域,"Range(""A1"").CurrentRegion.Copy"
+Range.Find,在範圍內搜尋特定內容,"Set found = Range(""A:A"").Find(""Target"")"
+Range.FindNext,繼續搜尋下一個相符項目,"Set found = Range(""A:A"").FindNext(found)"
+Range.Replace,替換範圍內的字串,"Range(""A:A"").Replace ""Old"", ""New"""
+Range.Sort,對資料範圍進行排序,"Range(""A1:B10"").Sort Key1:=Range(""A1""), Order1:=xlAscending"
+Range.AutoFilter,啟動或套用自動篩選,"Range(""A1:C1"").AutoFilter Field:=1, Criteria1:=""Active"""
+Range.Merge,合併指定儲存格範圍,"Range(""A1:B2"").Merge"
+Range.UnMerge,取消合併儲存格,"Range(""A1:B2"").UnMerge"
+Range.Address,取得儲存格的位址字串,addr = Selection.Address
+Range.Count,計算範圍內儲存格總數,"total = Range(""A1:C10"").Count"
+Range.Columns,參照特定欄或取得所有欄集合,"Columns(""A:B"").AutoFit"
+Range.Rows,參照特定列或取得所有列集合,"Rows(""1:5"").Delete"
+Range.EntireRow,傳回包含該範圍的整列,"Range(""A5"").EntireRow.Delete"
+Range.EntireColumn,傳回包含該範圍的整欄,"Range(""B1"").EntireColumn.Hidden = True"
+Range.SpecialCells,選取特定類型的儲存格（如公式、空白）,"Set emptyCells = Range(""A1:A100"").SpecialCells(xlCellTypeBlanks)"
+Range.HasFormula,檢查儲存格是否包含公式（True/False）,"If Range(""A1"").HasFormula Then MsgBox ""有公式"""
+Range.Insert,插入新儲存格/列/欄,Rows(2).Insert Shift:=xlDown
+Range.Delete,刪除儲存格/列/欄並填補空間,Columns(2).Delete
+Range.NumberFormat,設定數值格式,"Range(""A1"").NumberFormat = ""yyyy-mm-dd"""
+Range.Hyperlinks.Add,加入超連結,"Worksheets(1).Hyperlinks.Add Anchor:=Range(""A1""), Address:=""https://www.google.com"""
+Font.Name,設定字型名稱,"Range(""A1"").Font.Name = ""Microsoft JhengHei"""
+Font.Size,設定字型大小,"Range(""A1"").Font.Size = 12"
+Font.Bold,設定字型是否加粗,"Range(""A1"").Font.Bold = True"
+Font.Italic,設定字型是否斜體,"Range(""A1"").Font.Italic = True"
+Font.Color,設定字型顏色（RGB 碼）,"Range(""A1"").Font.Color = RGB(255, 0, 0)"
+Font.Underline,設定字型底線樣式,"Range(""A1"").Font.Underline = xlUnderlineStyleSingle"
+Interior.Color,設定儲存格背景填充顏色,"Range(""A1"").Interior.Color = RGB(200, 220, 255)"
+Interior.Pattern,設定背景填滿圖樣,"Range(""A1"").Interior.Pattern = xlSolid"
+Borders.LineStyle,設定邊框線條樣式,"Range(""A1:B5"").Borders.LineStyle = xlContinuous"
+Borders.Weight,設定邊框粗細,"Range(""A1:B5"").Borders.Weight = xlThick"
+Borders.Color,設定邊框顏色,"Range(""A1"").Borders.Color = RGB(0, 0, 0)"
+HorizontalAlignment,設定水平對齊方式（靠左、居中、靠右）,"Range(""A1"").HorizontalAlignment = xlCenter"
+VerticalAlignment,設定垂直對齊方式（靠上、居中、靠下）,"Range(""A1"").VerticalAlignment = xlCenter"
+WrapText,設定文字是否自動換行,"Range(""A1"").WrapText = True"
+Orientation,設定文字旋轉角度,"Range(""A1"").Orientation = 45"
+ColumnWidth,設定欄寬,"Columns(""A"").ColumnWidth = 15"
+RowHeight,設定列高,Rows(1).RowHeight = 30
+Columns.AutoFit,自動調整欄寬以符合內容,"Columns(""A:C"").AutoFit"
+Rows.AutoFit,自動調整列高以符合內容,"Rows(""1:10"").AutoFit"
+Dim,宣告變數及其資料型態,"Dim i As Integer, s As String"
+Set,將物件參考指定給物件變數,Set ws = ThisWorkbook.Sheets(1)
+ReDim,重新配置動態陣列的大小,ReDim arr(1 To 10)
+ReDim Preserve,重新配置陣列大小並保留現有資料,ReDim Preserve arr(1 To 20)
+Const,宣告常數（不可修改的值）,Const MaxRows As Long = 1000
+Option Explicit,強制變數必須先宣告才能使用,Option Explicit
+Type,定義自訂資料型態 (User-Defined Type),"Type Student, Name As String, Age As Integer, End Type"
+Enum,定義列舉型態,"Enum Status, Pending = 1, Active = 2, End Enum"
+Erase,清除陣列內容並釋放記憶體,Erase arr
+IsArray,判斷變數是否為陣列,"If IsArray(v) Then MsgBox ""是陣列"""
+If...Then...Else,條件判斷流程控制,If x > 10 Then y = 1 Else y = 0
+Select Case,多分支條件判斷,"Select Case score, Case Is >= 60: MsgBox ""Pass"", Case Else: MsgBox ""Fail"", End Select"
+For...Next,指定次數的計數迴圈,"For i = 1 To 10, Cells(i, 1).Value = i, Next i"
+For Each...Next,走訪集合或陣列中每個元素的迴圈,"For Each ws In Worksheets, Debug.Print ws.Name, Next ws"
+Do While...Loop,當條件成立時持續執行迴圈,"Do While x < 100, x = x + 1, Loop"
+Do Until...Loop,直到條件成立前持續執行迴圈,"Do Until x >= 100, x = x + 1, Loop"
+Exit For,強制跳出 For 迴圈,"If arr(i) = ""Stop"" Then Exit For"
+Exit Do,強制跳出 Do 迴圈,If x > 50 Then Exit Do
+Exit Sub,立即結束並跳出 Sub 過程,If errCount > 0 Then Exit Sub
+Exit Function,立即結束並跳出 Function 函數,If x = 0 Then Exit Function
+Goto,無條件跳轉至指定的標籤位置,On Error GoTo ErrorHandler
+With...End With,對同一物件重複執行多個屬性或方法操作,"With Range(""A1""), .Value = 1, .Font.Bold = True, End With"
+Len,計算字串長度,"n = Len(""Hello World"")"
+Left,擷取字串左側指定長度的字元,"s = Left(""Excel VBA"", 5)"
+Right,擷取字串右側指定長度的字元,"s = Right(""Excel VBA"", 3)"
+Mid,從指定位置擷取特定長度的字串,"s = Mid(""Excel VBA"", 7, 3)"
+InStr,搜尋子字串在母字串中的起始位置,"pos = InStr(""Hello World"", ""World"")"
+InStrRev,從字串末端反向搜尋子字串位置,"pos = InStrRev(""C:\\Data\\file.txt"", ""\\"")"
+Replace,替換字串中的特定文字,"s = Replace(""2026/01/01"", ""/"", ""-"")"
+Trim,消除字串前後的空白字元,"s = Trim(""  text  "")"
+LTrim,消除字串左側的空白字元,"s = LTrim(""  text"")"
+RTrim,消除字串右側的空白字元,"s = RTrim(""text  "")"
+UCase,將字串轉換為全大寫,"s = UCase(""vba"")"
+LCase,將字串轉換為全小寫,"s = LCase(""VBA"")"
+Split,以指定分隔符號將字串分割為一維陣列,"arr = Split(""A,B,C"", "","")"
+Join,將一維陣列元素結合成單一字串,"s = Join(arr, ""-"")"
+StrReverse,將字串字元順序反轉,"s = StrReverse(""ABCD"")"
+Asc,取得字元的 ASCII 碼,"code = Asc(""A"")"
+Chr,根據 ASCII 碼傳回對應字元,char = Chr(65)
+Format,根據指定格式樣式格式化文字或數值,"s = Format(Now, ""yyyy-mm-dd hh:mm:ss"")"
+Space,建立指定長度的全空白字串,s = Space(10)
+String,建立由重複字元組成的字串,"s = String(5, ""*"")"
+Abs,計算數值的絕對值,val = Abs(-15)
+Int,無條件捨去取得小於等於該數的最大整數,i = Int(5.8)
+Fix,無條件捨去取整數部分（負數向 0 靠攏）,i = Fix(-5.8)
+Round,四捨五入（使用銀行家捨入法）,"r = Round(3.14159, 2)"
+Sqr,計算數值的平方根,val = Sqr(16)
+Rnd,產生 0 到 1 之間的隨機小數,val = Rnd()
+Randomize,初始化隨機數生成器,Randomize
+Sgn,"判斷數值的正負號（傳回 1, 0, -1）",flag = Sgn(-25)
+Exp,計算 e 的 n 次方,val = Exp(1)
+Log,計算數值的自然對數,val = Log(10)
+Sin,計算正弦值,val = Sin(1.57)
+Cos,計算餘弦值,val = Cos(0)
+Tan,計算正切值,val = Tan(0.785)
+Now,取得目前的系統日期與時間,dt = Now
+Date,取得目前的系統日期,d = Date
+Time,取得目前的系統時間,t = Time
+DateAdd,在日期上增加或減少指定時間間隔,"future = DateAdd(""m"", 3, Date)"
+DateDiff,計算兩個日期之間的時間間隔差,"days = DateDiff(""d"", ""2026-01-01"", Date)"
+DatePart,取得日期的特定部分（年/月/日/週）,"m = DatePart(""m"", Date)"
+DateSerial,根據指定的年、月、日組合出日期,"d = DateSerial(2026, 12, 31)"
+TimeSerial,根據指定的時、分、秒組合出時間,"t = TimeSerial(14, 30, 0)"
+Year,傳回日期的年份,y = Year(Date)
+Month,傳回日期的月份,m = Month(Date)
+Day,傳回日期的日,d = Day(Date)
+Hour,傳回時間的小時,h = Hour(Now)
+Minute,傳回時間的分鐘,m = Minute(Now)
+Second,傳回時間的秒數,s = Second(Now)
+Weekday,傳回日期為星期幾（1-7）,w = Weekday(Date)
+WeekdayName,傳回星期幾的名稱字串,wName = WeekdayName(Weekday(Date))
+MonthName,傳回月份的名稱字串,mName = MonthName(Month(Date))
+Timer,傳回自午夜 00:00 起經過的秒數（常用於效能測時）,t1 = Timer
+CStr,強制轉型為字串型態 (String),s = CStr(123)
+CInt,強制轉型為短整數 (Integer),"i = CInt(""456"")"
+CLng,強制轉型為長整數 (Long),l = CLng(12345678)
+CDbl,強制轉型為倍精度浮點數 (Double),"d = CDbl(""3.14159"")"
+CSng,強制轉型為單精度浮點數 (Single),f = CSng(1.23)
+CDate,強制轉型為日期型態 (Date),"dt = CDate(""2026-06-01"")"
+CBool,強制轉型為布林值 (Boolean),b = CBool(1)
+CVar,強制轉型為 Variant 型態,v = CVar(100)
+IsNumeric,判斷變數或字串是否可轉換為數值,If IsNumeric(v) Then val = CDbl(v)
+IsDate,判斷變數或字串是否為合法的日期格式,"If IsDate(""2026-02-29"") Then MsgBox ""Valid"""
+IsEmpty,判斷變數是否未初始化或儲存格是否空白,"If IsEmpty(Range(""A1"")) Then MsgBox ""Empty"""
+IsNull,判斷表達式是否包含 Null 值,"If IsNull(val) Then MsgBox ""Null"""
+IsObject,判斷變數是否參照至物件,"If IsObject(obj) Then MsgBox ""Is Object"""
+IsError,判斷表達式是否傳回錯誤值,"If IsError(Range(""A1"").Value) Then MsgBox ""Error"""
+TypeName,傳回變數的資料型態名稱字串,t = TypeName(var)
+VarType,傳回代表變數型態的整數代碼,code = VarType(var)
+MsgBox,彈出訊息提示框,"MsgBox ""操作完成！"", vbInformation, ""提示"""
+InputBox,彈出輸入框接收使用者輸入的字串,"ans = InputBox(""請輸入姓名："", ""輸入"")"
+Application.InputBox,Excel 專用的輸入框，可限定輸入型態（如公式、儲存格範圍）,"Set rng = Application.InputBox(""選取範圍"", Type:=8)"
+Application.GetOpenFilename,開啟檔案選取視窗並取得檔案路徑,"filePath = Application.GetOpenFilename(""Excel Files (*.xlsx), *.xlsx"")"
+Application.GetSaveAsFilename,開啟另存新檔視窗並取得指定的儲存路徑,"filePath = Application.GetSaveAsFilename(""default.xlsx"")"
+Application.FileDialog,呼叫 Office 標準的檔案或資料夾選擇對話框,Set fd = Application.FileDialog(msoFileDialogFolderPicker)
+On Error GoTo label,發生錯誤時跳轉至指定的錯誤處理標籤,On Error GoTo ErrHandler
+On Error Resume Next,忽略發生的錯誤並繼續執行下一行程式碼,On Error Resume Next
+On Error GoTo 0,清除或重置目前的錯誤處理常式,On Error GoTo 0
+Err.Number,取得目前發生的錯誤代碼,errNum = Err.Number
+Err.Description,取得目前發生的錯誤詳細描述文字,errMsg = Err.Description
+Err.Clear,清除 Err 物件的所有屬性設定,Err.Clear
+Err.Raise,手動觸發一個自訂或特定的錯誤,"Err.Raise Number:=9999, Description:=""自訂錯誤"""
+Array(),快速建立包含指定元素的 Variant 陣列,"arr = Array(""Apple"", ""Banana"", ""Cherry"")"
+LBound,取得陣列指定維度的最小下標值,minIdx = LBound(arr)
+UBound,取得陣列指定維度的最大上標值,maxIdx = UBound(arr)
+Filter,自字串陣列中過濾出包含或不包含特定關鍵字的子陣列,"subArr = Filter(arr, ""A"")"
+Dir,檢查檔案或資料夾是否存在，或列出符合條件的檔名,"fileName = Dir(""C:\\Data\\*.xlsx"")"
+"CreateObject(""Scripting.FileSystemObject"")",建立 FSO 物件以進行高階檔案與資料夾操作,"Set fso = CreateObject(""Scripting.FileSystemObject"")"
+FSO.FileExists,使用 FSO 檢查檔案是否存在,"If fso.FileExists(""C:\\test.txt"") Then MsgBox ""Exist"""
+FSO.FolderExists,使用 FSO 檢查資料夾是否存在,"If fso.FolderExists(""C:\\Data"") Then MsgBox ""Exist"""
+FSO.CreateFolder,建立新資料夾,"fso.CreateFolder(""C:\\NewFolder"")"
+FSO.DeleteFile,刪除指定檔案,"fso.DeleteFile ""C:\\test.txt"""
+FSO.CopyFile,複製檔案到指定路徑,"fso.CopyFile ""C:\\src.txt"", ""C:\\dst.txt"""
+FSO.MoveFile,移動檔案到指定路徑,"fso.MoveFile ""C:\\src.txt"", ""D:\\dst.txt"""
+FSO.OpenTextFile,開啟文字檔進行讀寫操作,"Set ts = fso.OpenTextFile(""C:\\log.txt"", 8, True)"`;
+
+        function parseCSV(csv) {
+            const lines = csv.split('\n');
+            const data = [];
+            for (let i = 1; i < lines.length; i++) {
+                // Regex handles quoted strings with commas inside
+                const row = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                if (row.length >= 3) {
+                    let cmd = row[0].replace(/"/g, '').trim();
+                    let desc = row[1].replace(/"/g, '').trim();
+                    let code = row[2].replace(/"/g, '').trim();
+                    
+                    // Logic to assign categories
+                    let category = "其他系統";
+                    if (cmd.startsWith("Application")) category = "系統/全域";
+                    else if (cmd.startsWith("Workbook")) category = "活頁簿";
+                    else if (cmd.startsWith("Worksheet")) category = "工作表";
+                    else if (cmd.match(/^(Range|Cells|Columns|Rows)/)) category = "儲存格範圍";
+                    else if (cmd.match(/^(Font|Interior|Borders|Horizontal|Vertical|WrapText|ColumnWidth|RowHeight)/)) category = "格式設定";
+                    else if (cmd.match(/^(Dim|Set|ReDim|Const|Option|Type|Enum|Erase|IsArray)/)) category = "變數與宣告";
+                    else if (cmd.match(/^(If|Select|For|Do|Exit|Goto|With)/)) category = "流程控制";
+                    else if (cmd.match(/^(Len|Left|Right|Mid|InStr|Replace|Trim|UCase|LCase|Split|Join|StrReverse|Asc|Chr|Format|Space|String)/)) category = "字串處理";
+                    else if (cmd.match(/^(Abs|Int|Fix|Round|Sqr|Rnd|Randomize|Sgn|Exp|Log|Sin|Cos|Tan)/)) category = "數學運算";
+                    else if (cmd.match(/^(Now|Date|Time|Year|Month|Day|Hour|Minute|Second|Weekday|Timer|DateAdd|DateDiff|DatePart|DateSerial|TimeSerial)/)) category = "日期與時間";
+                    else if (cmd.match(/^(CStr|CInt|CLng|CDbl|CSng|CDate|CBool|CVar|IsNumeric|IsDate|IsEmpty|IsNull|IsObject|IsError|TypeName|VarType)/)) category = "型態轉換與判斷";
+                    else if (cmd.match(/^(MsgBox|InputBox|GetOpenFilename|GetSaveAsFilename|FileDialog)/)) category = "互動視窗";
+                    else if (cmd.match(/^(On Error|Err)/)) category = "錯誤處理";
+                    else if (cmd.match(/^(Array|LBound|UBound|Filter)/)) category = "陣列操作";
+                    else if (cmd.match(/^(Dir|CreateObject|FSO)/) || cmd.includes("FileSystemObject")) category = "檔案與系統操作";
+
+                    data.push({ cmd, desc, code, category });
+                }
+            }
+            return data;
+        }
+
+        const ALL_COMMANDS = parseCSV(RAW_DATA);
+        let activeCategory = "全部";
+
+        function initCategories() {
+            const categories = ["全部", ...new Set(ALL_COMMANDS.map(c => c.category))];
+            const container = document.getElementById('category-tags');
+            container.innerHTML = categories.map(cat => `
+                <button onclick="setCategory('${cat}')" 
+                    class="px-4 py-1.5 rounded-full text-[10px] font-bold tracking-widest uppercase transition-all border 
+                    ${cat === activeCategory ? 'btn-neon border-transparent text-white' : 'glass-card border-white/10 text-gray-400 hover:text-white'}">
+                    ${cat}
+                </button>
+            `).join('');
+        }
+
+        function setCategory(cat) {
+            activeCategory = cat;
+            initCategories();
+            render();
+        }
+
+        function render() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const filtered = ALL_COMMANDS.filter(item => {
+                const matchQuery = item.cmd.toLowerCase().includes(query) || item.desc.toLowerCase().includes(query);
+                const matchCat = activeCategory === "全部" || item.category === activeCategory;
+                return matchQuery && matchCat;
+            });
+
+            // Update Counter
+            document.getElementById('total-counter').innerText = filtered.length;
+
+            const container = document.getElementById('results-container');
+            const emptyState = document.getElementById('empty-state');
+
+            if (filtered.length === 0) {
+                container.innerHTML = '';
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                container.innerHTML = filtered.map(item => `
+                    <div class="glass-card rounded-3xl p-6 hover:border-[#FF2D55]/50 transition-all group relative overflow-hidden">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-[10px] bg-white/5 text-[#00D2FF] px-2 py-1 rounded font-bold uppercase tracking-tighter">${item.category}</span>
+                            <button onclick="copyCode('${item.code.replace(/'/g, "\\'").replace(/\n/g, " ")}')" class="text-gray-500 hover:text-[#FF2D55] transition-colors">
+                                <i class="far fa-copy"></i>
+                            </button>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 code-font group-hover:text-[#FF2D55] transition-colors break-all">${item.cmd}</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4 h-12 overflow-hidden overflow-ellipsis">${item.desc}</p>
+                        <div class="relative">
+                            <pre class="bg-black/40 p-4 rounded-xl text-xs text-pink-300 code-font border border-white/5 overflow-x-auto custom-scrollbar">${item.code}</pre>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function copyCode(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.remove('opacity-0');
+                toast.classList.add('bottom-14');
+                setTimeout(() => {
+                    toast.classList.add('opacity-0');
+                    toast.classList.remove('bottom-14');
+                }, 2000);
+            });
+        }
+
+        document.getElementById('search-input').addEventListener('input', render);
+        
+        // Initial setup
+        window.onload = () => {
+            initCategories();
+            render();
+        };
+    </script>
+</body>
+</html>
