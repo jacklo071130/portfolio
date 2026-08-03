@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>羅其彥 | 廠長 • 生產管理主管 • 高級發泡化學工程師</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter, JetBrains Mono, Outfit, and Monoton for Image-Matched Retro-Cyber Theme -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Monoton&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        display: ['Monoton', 'cursive', 'sans-serif'],
+                    },
+                    colors: {
+                        cyber: {
+                            bg: '#040b14',
+                            card: 'rgba(8, 22, 38, 0.75)',
+                            border: 'rgba(0, 180, 216, 0.25)',
+                            cyan: '#00b4d8',      /* 圖片上半部 湛藍色 */
+                            blue: '#0077b6',
+                            yellow: '#ffb703',    /* 圖片下半部 鮮黃色 */
+                            amber: '#f4a261',
+                            black: '#03080e'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Cyberpunk Ambient Background & Grid with Image Color Palette */
+        body {
+            background-color: #03080e;
+            color: #f1f5f9;
+            overflow-x: hidden;
+        }
+
+        .cyber-grid {
+            background-image: 
+                linear-gradient(to right, rgba(0, 180, 216, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 183, 3, 0.04) 1px, transparent 1px);
+            background-size: 36px 36px;
+        }
+
+        /* Glassmorphism Utilities tailored to Pool Blue & Sun Yellow */
+        .glass-panel {
+            background: rgba(6, 18, 33, 0.72);
+            backdrop-filter: blur(18px) saturate(180%);
+            -webkit-backdrop-filter: blur(18px) saturate(180%);
+            border: 1px solid rgba(0, 180, 216, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+        }
+
+        .glass-panel-interactive {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-panel-interactive:hover {
+            border-color: rgba(255, 183, 3, 0.6);
+            box-shadow: 0 0 25px rgba(255, 183, 3, 0.2), inset 0 0 15px rgba(0, 180, 216, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Multiline Retro Striped Font Utility (Inspired by POOL PARTY image text) */
+        .font-striped {
+            font-family: 'Monoton', cursive;
+            letter-spacing: 0.05em;
+        }
+
+        /* Glowing Text Utilities */
+        .glow-cyan {
+            text-shadow: 0 0 14px rgba(0, 180, 216, 0.7);
+        }
+        .glow-yellow {
+            text-shadow: 0 0 14px rgba(255, 183, 3, 0.7);
+        }
+
+        /* Scanline visual overlay */
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(0, 180, 216, 0.5), rgba(255, 183, 3, 0.5), transparent);
+            animation: scan 6s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(-100vh); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* Pulse glowing dot */
+        .status-dot {
+            box-shadow: 0 0 10px #ffb703;
+        }
+
+        /* Toast animation */
+        #toast {
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body class="cyber-grid min-h-screen relative font-sans antialiased selection:bg-amber-400 selection:text-black">
+
+    <!-- Ambient Glows: Top Pool-Blue / Bottom Sun-Yellow (Matched with image) -->
+    <div class="fixed top-[-10%] left-[-5%] w-[600px] h-[500px] bg-sky-500/20 rounded-full blur-[150px] pointer-events-none z-0"></div>
+    <div class="fixed bottom-[-10%] right-[-5%] w-[600px] h-[500px] bg-amber-400/20 rounded-full blur-[150px] pointer-events-none z-0"></div>
+
+    <!-- Scanline visual overlay -->
+    <div class="fixed inset-0 pointer-events-none z-50 overflow-hidden opacity-30">
+        <div class="scanline"></div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-5 right-5 z-50 translate-y-[-100px] opacity-0 pointer-events-none flex items-center space-x-3 bg-slate-900/95 border border-amber-400/60 text-amber-300 px-5 py-3 rounded-xl shadow-[0_0_20px_rgba(255,183,3,0.3)] backdrop-blur-md">
+        <i class="fa-solid fa-circle-check text-lg"></i>
+        <span id="toast-message" class="text-sm font-mono font-medium">已複製到剪貼簿</span>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 relative z-10 space-y-8">
+
+        <!-- HEADER / HERO SECTION -->
+        <header class="glass-panel rounded-3xl p-6 sm:p-10 relative overflow-hidden">
+            <!-- Gradient Top Line with Pool Blue & Sun Yellow -->
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-sky-400 via-amber-400 to-sky-400"></div>
+            <div class="absolute top-3 right-4 font-mono text-[10px] text-amber-400/60 tracking-widest uppercase hidden sm:block">
+                
+            </div>
+
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <!-- Profile Identity -->
+                <div class="space-y-3">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/40 text-amber-300 text-xs font-mono">
+                        <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse status-dot"></span>
+                        <span>20 年高階製造管理經驗</span>
+                    </div>
+
+                    <!-- Title Header with Monoton Striped Style Decor -->
+                    <div class="space-y-1">
+                        <div class="font-striped text-sky-400 text-xl tracking-wider uppercase opacity-90">EXECUTIVE PORTFOLIO</div>
+                        <h1 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white flex items-baseline gap-3">
+                            <span>羅其彥</span>
+                            
+                        </h1>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2 pt-1">
+                        <span class="px-3 py-1 rounded-lg bg-sky-500/15 border border-sky-400/40 text-sky-300 font-mono text-xs sm:text-sm font-semibold">
+                            <i class="fa-solid fa-industry mr-1.5 text-xs"></i>廠長
+                        </span>
+                        <span class="px-3 py-1 rounded-lg bg-amber-500/15 border border-amber-400/40 text-amber-300 font-mono text-xs sm:text-sm font-semibold">
+                            <i class="fa-solid fa-diagram-project mr-1.5 text-xs"></i>生產管理主管
+                        </span>
+                        <span class="px-3 py-1 rounded-lg bg-cyan-500/15 border border-cyan-400/40 text-cyan-300 font-mono text-xs sm:text-sm font-semibold">
+                            <i class="fa-solid fa-flask mr-1.5 text-xs"></i>高級發泡化學工程師
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Profile Photo Square Block (替換原本的按鈕區) -->
+                <div class="relative group mx-auto md:mx-0 flex-shrink-0">
+                    <!-- Glow effect behind photo block -->
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-sky-400 via-amber-400 to-sky-400 rounded-2xl blur opacity-40 group-hover:opacity-80 transition duration-300"></div>
+                    
+                    <!-- Photo Box Frame -->
+                    <div class="relative w-36 h-36 sm:w-40 sm:h-40 rounded-2xl overflow-hidden bg-slate-950 border border-sky-400/50 shadow-2xl flex flex-col items-center justify-center">
+                        <!-- 請將 src 替換為您的照片 URL / 檔名 -->
+                        <img id="profile-photo" 
+                             src="https://jacklo071130.github.io/portfolio/person.jpg" 
+                             alt="羅其彥 個人照" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                             onerror="this.onerror=null; this.src='https://placehold.co/400x400/061221/00b4d8?text=Profile+Photo';">
+                        
+                        <!-- Cyber Decorative Corner Accents -->
+                        <div class="absolute top-1 left-1 w-2.5 h-2.5 border-t-2 border-l-2 border-sky-400 pointer-events-none"></div>
+                        <div class="absolute top-1 right-1 w-2.5 h-2.5 border-t-2 border-r-2 border-sky-400 pointer-events-none"></div>
+                        <div class="absolute bottom-1 left-1 w-2.5 h-2.5 border-b-2 border-l-2 border-amber-400 pointer-events-none"></div>
+                        <div class="absolute bottom-1 right-1 w-2.5 h-2.5 border-b-2 border-r-2 border-amber-400 pointer-events-none"></div>
+
+        
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Info Bar -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-8 pt-6 border-t border-sky-500/20 text-xs sm:text-sm text-slate-200 font-mono">
+                <div class="flex items-center space-x-2.5 bg-slate-950/60 p-2.5 rounded-lg border border-sky-500/20">
+                    <i class="fa-solid fa-mobile-screen text-amber-400 text-base"></i>
+                    <span class="truncate">0929-553-569</span>
+                </div>
+                <div class="flex items-center space-x-2.5 bg-slate-950/60 p-2.5 rounded-lg border border-sky-500/20">
+                    <i class="fa-solid fa-envelope text-sky-400 text-base"></i>
+                    <a href="mailto:loyemster@gmail.com" class="truncate hover:text-amber-300 hover:underline">loyemster@gmail.com</a>
+                </div>
+                <div class="flex items-center space-x-2.5 bg-slate-950/60 p-2.5 rounded-lg border border-sky-500/20">
+                    <i class="fa-solid fa-location-dot text-amber-400 text-base"></i>
+                    <span class="truncate">苗栗縣頭份市</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- PROFESSIONAL CERTIFICATIONS SECTION (替換原本的數據卡片) -->
+        <section class="space-y-3">
+            <div class="flex items-center space-x-3 px-1">
+                <div class="p-2 rounded-lg bg-amber-400/15 text-amber-300 border border-amber-400/30">
+                    <i class="fa-solid fa-award text-base"></i>
+                </div>
+                <h2 class="text-xl font-black text-white tracking-wide">專業證照與資格認證 (Certifications & Licenses)</h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <!-- Certificate 1 -->
+                <div onclick="openCertModal('EHS 甲級廢棄物清理專業技術人員 / 工安證照', 'https://placehold.co/1200x850/061221/00b4d8?text=Certificate+01+%E8%AD%89%E7%85%A7%E6%94%BE%E5%A4%A7%E9%A0%90%E8%A6%BD', '勞動部 / 環保署 • 具備職業安全與廢棄物處置管理專業資格')" 
+                     class="glass-panel glass-panel-interactive rounded-2xl p-4 flex flex-col justify-between cursor-pointer group relative overflow-hidden">
+                    
+                    <div class="space-y-3">
+                        <!-- Preview Thumbnail -->
+                        <div class="relative w-full h-36 rounded-xl overflow-hidden bg-slate-950 border border-sky-400/30 group-hover:border-amber-400/60 transition">
+                            <img src="https://placehold.co/600x400/061221/00b4d8?text=%E8%AD%89%E7%85%A701+%E9%A0%90%E8%A6%BD" 
+                                 alt="證照 01 預覽" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            
+                            <!-- Hover zoom overlay -->
+                            <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2 text-amber-300">
+                                <i class="fa-solid fa-magnifying-glass-plus text-xl"></i>
+                                <span class="text-xs font-mono font-bold">點擊放大檢視</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="text-[11px] font-mono text-sky-400 uppercase tracking-wider">Cert 01 / 安衛環保</div>
+                            <h3 class="text-base font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-1">EHS 工安與環保專業證照</h3>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-sky-500/20 flex items-center justify-between text-xs text-slate-300 font-mono">
+                        <span>勞動部 / 環保署</span>
+                        <span class="text-amber-400 group-hover:translate-x-1 transition-transform">
+                            檢視 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Certificate 2 -->
+                <div onclick="openCertModal('ISO 9001 / ISO 14001 品質與環境管理系統主導審查員', 'https://placehold.co/1200x850/061221/ffb703?text=Certificate+02+%E8%AD%89%E7%85%A7%E6%94%BE%E5%A4%A7%E9%A0%90%E8%A6%BD', '國際認證機構 • 精通工廠品質管理與 EHS 環境管理體系稽核')" 
+                     class="glass-panel glass-panel-interactive rounded-2xl p-4 flex flex-col justify-between cursor-pointer group relative overflow-hidden">
+                    
+                    <div class="space-y-3">
+                        <!-- Preview Thumbnail -->
+                        <div class="relative w-full h-36 rounded-xl overflow-hidden bg-slate-950 border border-sky-400/30 group-hover:border-amber-400/60 transition">
+                            <img src="https://placehold.co/600x400/061221/ffb703?text=%E8%AD%89%E7%85%A702+%E9%A0%90%E8%A6%BD" 
+                                 alt="證照 02 預覽" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            
+                            <!-- Hover zoom overlay -->
+                            <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2 text-amber-300">
+                                <i class="fa-solid fa-magnifying-glass-plus text-xl"></i>
+                                <span class="text-xs font-mono font-bold">點擊放大檢視</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="text-[11px] font-mono text-amber-400 uppercase tracking-wider">Cert 02 / 管理體系</div>
+                            <h3 class="text-base font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-1">ISO 9001 / 14001 品質環境認證</h3>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-sky-500/20 flex items-center justify-between text-xs text-slate-300 font-mono">
+                        <span>國際驗證機構</span>
+                        <span class="text-amber-400 group-hover:translate-x-1 transition-transform">
+                            檢視 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Certificate 3 -->
+                <div onclick="openCertModal('化學工程師資格 / 發泡高階研發與技術證明', 'https://placehold.co/1200x850/061221/00b4d8?text=Certificate+03+%E8%AD%89%E7%85%A7%E6%94%BE%E5%A4%A7%E9%A0%90%E8%A6%BD', '高階化學工程 • PU 發泡配方開發與產線製程優化認證')" 
+                     class="glass-panel glass-panel-interactive rounded-2xl p-4 flex flex-col justify-between cursor-pointer group relative overflow-hidden">
+                    
+                    <div class="space-y-3">
+                        <!-- Preview Thumbnail -->
+                        <div class="relative w-full h-36 rounded-xl overflow-hidden bg-slate-950 border border-sky-400/30 group-hover:border-amber-400/60 transition">
+                            <img src="https://placehold.co/600x400/061221/00b4d8?text=%E8%AD%89%E7%85%A703+%E9%A0%90%E8%A6%BD" 
+                                 alt="證照 03 預覽" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            
+                            <!-- Hover zoom overlay -->
+                            <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2 text-amber-300">
+                                <i class="fa-solid fa-magnifying-glass-plus text-xl"></i>
+                                <span class="text-xs font-mono font-bold">點擊放大檢視</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="text-[11px] font-mono text-sky-400 uppercase tracking-wider">Cert 03 / 化學工程</div>
+                            <h3 class="text-base font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-1">高級化學工程 / 發泡專業證照</h3>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-sky-500/20 flex items-center justify-between text-xs text-slate-300 font-mono">
+                        <span>專業工程師協會</span>
+                        <span class="text-amber-400 group-hover:translate-x-1 transition-transform">
+                            檢視 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXECUTIVE SUMMARY / ABOUT ME -->
+        <section class="glass-panel rounded-3xl p-6 sm:p-8 space-y-4">
+            <div class="flex items-center space-x-3 border-b border-sky-500/20 pb-4">
+                <div class="p-2.5 rounded-xl bg-amber-400/15 text-amber-300 border border-amber-400/30">
+                    <i class="fa-solid fa-user-gear text-lg"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl font-black text-white tracking-wide">個人摘要 (Executive Summary)</h2>
+                    <p class="text-xs font-mono text-sky-300">20+ Years Global Manufacturing Leadership</p>
+                </div>
+            </div>
+
+            <div class="text-slate-200 leading-relaxed text-sm sm:text-base space-y-3 font-normal">
+                <p>
+                    具備 <strong class="text-amber-300 font-semibold">20 年跨國與大型製造業管理經驗</strong>（中國文化大學化學工程學士），專精於 <span class="text-sky-300 font-medium">PU 發泡配方研發</span>、<span class="text-sky-300 font-medium">產線自動化與排程優化</span>、<span class="text-sky-300 font-medium">精益生產（Lean Manufacturing）</span> 及 <span class="text-sky-300 font-medium">工安環保合規（EHS）</span>。
+                </p>
+                <p>
+                    曾管理高達 <strong class="text-white font-semibold">13 人以上之全廠營運</strong>，具備將產品良率由 <span class="text-amber-400 font-mono font-bold">80% 提升至 96%</span>、達成 <span class="text-amber-400 font-mono font-bold">OTD 100%</span> 及連續 <span class="text-amber-400 font-mono font-bold">450 天零工安事故</span> 之實績。擅長跨部門溝通、團隊績效考核與政府官員及環保稽查對接。
+                </p>
+            </div>
+        </section>
+
+        <!-- CORE COMPETENCIES -->
+        <section class="space-y-4">
+            <div class="flex items-center space-x-3 px-1">
+                <div class="p-2 rounded-lg bg-sky-500/15 text-sky-300 border border-sky-400/30">
+                    <i class="fa-solid fa-microchip text-base"></i>
+                </div>
+                <h2 class="text-xl font-black text-white tracking-wide">核心專業技能 (Core Competencies)</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <!-- Skill 1 -->
+                <div class="glass-panel glass-panel-interactive rounded-2xl p-6 flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <div class="w-10 h-10 rounded-xl bg-amber-400/15 border border-amber-400/40 text-amber-300 flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-sitemap"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">生產與供應鏈管理</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            專精動態生產排程與資源最佳化分配，實現營運效益最大化與準時交付。
+                        </p>
+                    </div>
+                    <ul class="space-y-2 text-xs font-mono text-slate-200 border-t border-slate-800/80 pt-3">
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-angle-right text-amber-400"></i>
+                            <span>產線動態排程 / 稼動率提升</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-angle-right text-amber-400"></i>
+                            <span>OTD 100% 交期精準控管</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-angle-right text-amber-400"></i>
+                            <span>跨部門溝通 & 團隊績效考核</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Skill 2 -->
+                <div class="glass-panel glass-panel-interactive rounded-2xl p-6 flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <div class="w-10 h-10 rounded-xl bg-sky-400/15 border border-sky-400/40 text-sky-300 flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-vial-circle-check"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">化學工程與品質控管</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            高階發泡化學專家，整合實驗室研發與工廠化試產，顯著提升良率。
+                        </p>
+                    </div>
+                    <ul class="space-y-2 text-xs font-mono text-slate-200 border-t border-slate-800/80 pt-3">
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-angle-right text-sky-400"></i>
+                            <span>PU 發泡化學配方調校與優化</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-angle-right text-sky-400"></i>
+                            <span>標準試產流程 (SOP) 制定</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-angle-right text-sky-400"></i>
+                            <span>現場發泡參數即時監控與良率優化</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Skill 3 -->
+                <div class="glass-panel glass-panel-interactive rounded-2xl p-6 flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <div class="w-10 h-10 rounded-xl bg-amber-400/15 border border-amber-400/40 text-amber-300 flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">廠務與安衛合規 (EHS)</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            建構安全健康的營運環境，落實嚴格風險控制與政府稽查完美對接。
+                        </p>
+                    </div>
+                    <ul class="space-y-2 text-xs font-mono text-slate-200 border-t border-slate-800/80 pt-3">
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-angle-right text-amber-400"></i>
+                            <span>EHS 安全衛生規範嚴格執行</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-angle-right text-amber-400"></i>
+                            <span>政府官員與環保稽查精準對接</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-angle-right text-amber-400"></i>
+                            <span>零工安事故風險管理機制</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- CAREER HIGHLIGHTS / EXPERIENCE -->
+        <section class="space-y-4">
+            <div class="flex items-center space-x-3 px-1">
+                <div class="p-2 rounded-lg bg-amber-400/15 text-amber-300 border border-amber-400/30">
+                    <i class="fa-solid fa-briefcase text-base"></i>
+                </div>
+                <h2 class="text-xl font-black text-white tracking-wide">職涯成就與工作經歷 (Professional Experience)</h2>
+            </div>
+
+            <div class="space-y-5">
+                <!-- Experience Card 1 -->
+                <div class="glass-panel glass-panel-interactive rounded-2xl p-6 sm:p-7 relative overflow-hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-sky-500/20 pb-4 mb-4">
+                        <div>
+                            <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-sky-500/15 text-sky-300 border border-sky-400/30 font-semibold">重點經歷 01</span>
+                            <h3 class="text-xl font-bold text-white mt-1">江西華慶泡綿股份有限公司</h3>
+                            <p class="text-sm text-amber-300 font-semibold">生產主管</p>
+                        </div>
+                        <div class="font-mono text-xs sm:text-sm text-slate-300 bg-slate-950/80 px-3 py-1.5 rounded-lg border border-sky-500/20 self-start sm:self-auto">
+                            <i class="fa-regular fa-calendar mr-1.5 text-amber-400"></i>2022/04 – 2024/09 (2年6個月)
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 text-sm text-slate-200">
+                        <div class="flex items-start space-x-3">
+                            <div class="mt-1 font-mono text-xs text-amber-300 bg-amber-950/70 p-1 rounded border border-amber-400/30">01</div>
+                            <div>
+                                <strong class="text-white font-semibold">重構生產管理流程與發泡工藝配方：</strong>
+                                重新制定發泡標準作業程序（SOP）、優化化學配方，並導入預防性設備維護機制，成功將產品良率由 <span class="text-amber-300 font-mono font-bold">85% 提升至 96%</span>，整體產量成長 <span class="text-amber-300 font-mono font-bold">10%</span>。
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="mt-1 font-mono text-xs text-amber-300 bg-amber-950/70 p-1 rounded border border-amber-400/30">02</div>
+                            <div>
+                                <strong class="text-white font-semibold">落實全廠工安風控與品質管理：</strong>
+                                執行嚴格安全規範與政府合規稽查，創造連續 <span class="text-amber-300 font-mono font-bold">450 天零工安事故紀錄</span>；配合品質優化措施，使客戶退貨率降低 <span class="text-amber-300 font-mono font-bold">3%</span>。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience Card 2 -->
+                <div class="glass-panel glass-panel-interactive rounded-2xl p-6 sm:p-7 relative overflow-hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-sky-500/20 pb-4 mb-4">
+                        <div>
+                            <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-amber-400/15 text-amber-300 border border-amber-400/30 font-semibold">重點經歷 02</span>
+                            <h3 class="text-xl font-bold text-white mt-1">宇迪科技股份有限公司</h3>
+                            <p class="text-sm text-sky-300 font-semibold">LITE 生產課長</p>
+                        </div>
+                        <div class="font-mono text-xs sm:text-sm text-slate-300 bg-slate-950/80 px-3 py-1.5 rounded-lg border border-sky-500/20 self-start sm:self-auto">
+                            <i class="fa-regular fa-calendar mr-1.5 text-sky-400"></i>2021/02 – 2022/03 (1年2個月)
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 text-sm text-slate-200">
+                        <div class="flex items-start space-x-3">
+                            <div class="mt-1 font-mono text-xs text-sky-300 bg-sky-950/70 p-1 rounded border border-sky-400/30">01</div>
+                            <div>
+                                <strong class="text-white font-semibold">精準排程與人力調配，實現百萬級產線 100% 準時交付：</strong>
+                                同時管理 3 條光纖電纜產線，透過動態生產排程與彈性調配 5–8 人現場團隊，使產線達成每日連續 18 小時高效運作，創下任內準時交貨率 <span class="text-sky-300 font-mono font-bold">（OTD）100%</span> 的優異營運績效。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience Card 3 -->
+                <div class="glass-panel glass-panel-interactive rounded-2xl p-6 sm:p-7 relative overflow-hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-sky-500/20 pb-4 mb-4">
+                        <div>
+                            <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-sky-500/15 text-sky-300 border border-sky-400/30 font-semibold">重點經歷 03</span>
+                            <h3 class="text-xl font-bold text-white mt-1">坤慶產業股份有限公司</h3>
+                            <p class="text-sm text-amber-300 font-semibold">發泡工程師</p>
+                        </div>
+                        <div class="font-mono text-xs sm:text-sm text-slate-300 bg-slate-950/80 px-3 py-1.5 rounded-lg border border-sky-500/20 self-start sm:self-auto">
+                            <i class="fa-regular fa-calendar mr-1.5 text-amber-400"></i>2012/09 – 2019/10 (7年2個月)
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 text-sm text-slate-200">
+                        <div class="flex items-start space-x-3">
+                            <div class="mt-1 font-mono text-xs text-amber-300 bg-amber-950/70 p-1 rounded border border-amber-400/30">01</div>
+                            <div>
+                                <strong class="text-white font-semibold">優化 PU 化學配方與試產流程，大幅提升產線良率：</strong>
+                                主導研發並成功優化 <span class="text-amber-300 font-mono font-bold">6 款 PU 發泡配方</span>；透過制定標準化試產流程與強化現場發泡參數監控，引導團隊將產品良率由 <span class="text-amber-300 font-mono font-bold">80% 大幅提升至 92%</span>。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EDUCATION & CONTACT FOOTER -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <!-- Education Box -->
+            <section class="glass-panel rounded-2xl p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center space-x-3 border-b border-sky-500/20 pb-3 mb-4">
+                        <div class="p-2 rounded-lg bg-amber-400/15 text-amber-300 border border-amber-400/30">
+                            <i class="fa-solid fa-graduation-cap text-base"></i>
+                        </div>
+                        <h2 class="text-lg font-bold text-white">學歷背景 (Education)</h2>
+                    </div>
+
+                    <div class="space-y-2">
+                        <h3 class="text-base font-bold text-white">中國文化大學</h3>
+                        <p class="text-sm text-amber-300 font-medium">化學工程學系 學士</p>
+                        <p class="text-xs font-mono text-slate-300">
+                            <i class="fa-regular fa-calendar mr-1 text-sky-400"></i>1981/09 – 1984/06
+                        </p>
+                    </div>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-800 text-xs text-slate-300 font-mono">
+                    ✦ 紮實化學工程理論基礎與實務發泡應用
+                </div>
+            </section>
+
+            <!-- Quick Contact Box -->
+            <section class="glass-panel rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden">
+                <div>
+                    <div class="flex items-center space-x-3 border-b border-sky-500/20 pb-3 mb-4">
+                        <div class="p-2 rounded-lg bg-sky-500/15 text-sky-300 border border-sky-400/30">
+                            <i class="fa-solid fa-paper-plane text-base"></i>
+                        </div>
+                        <h2 class="text-lg font-bold text-white">立即聯絡 (Get In Touch)</h2>
+                    </div>
+
+                    <div class="space-y-3 font-mono text-sm">
+                        <div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/80 border border-sky-500/20 hover:border-amber-400/40 transition">
+                            <span class="text-slate-400 text-xs">電話:</span>
+                            <span class="text-amber-300 font-bold">0929-553-569</span>
+                            <button onclick="copyToClipboard('0929553569', '已複製電話號碼')" class="text-xs bg-slate-800 hover:bg-amber-400/20 text-amber-300 px-2.5 py-1 rounded border border-amber-400/40 font-semibold">
+                                複製
+                            </button>
+                        </div>
+
+                        <div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/80 border border-sky-500/20 hover:border-sky-400/40 transition">
+                            <span class="text-slate-400 text-xs">Email:</span>
+                            <span class="text-sky-300 font-bold truncate max-w-[170px] sm:max-w-none">loyemster@gmail.com</span>
+                            <button onclick="copyToClipboard('loyemster@gmail.com', '已複製 Email')" class="text-xs bg-slate-800 hover:bg-sky-400/20 text-sky-300 px-2.5 py-1 rounded border border-sky-400/40 font-semibold">
+                                複製
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-slate-800 text-xs text-slate-400 font-mono text-center">
+                    © 2026 羅其彥 Luo, Qi-Yan • Cyber-Glass Pool Edition
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+    <!-- CERTIFICATE LIGHTBOX MODAL (證照放大對話框) -->
+    <div id="certModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="relative w-full max-w-4xl glass-panel rounded-3xl p-4 sm:p-6 border border-sky-400/50 shadow-[0_0_50px_rgba(0,180,216,0.25)] flex flex-col max-h-[90vh]">
+            
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-sky-500/30">
+                <div class="space-y-0.5">
+                    <span class="text-[10px] font-mono text-amber-400 uppercase tracking-wider">CERTIFICATE VIEW</span>
+                    <h3 id="modalTitle" class="text-lg sm:text-xl font-bold text-white truncate max-w-[260px] sm:max-w-xl">證照名稱</h3>
+                </div>
+                <!-- Close Button -->
+                <button onclick="closeCertModal()" class="w-9 h-9 rounded-full bg-slate-900/80 border border-amber-400/40 text-amber-300 hover:bg-amber-400 hover:text-slate-950 transition flex items-center justify-center">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Modal Image Body -->
+            <div class="relative flex-1 overflow-hidden rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-center">
+                <img id="modalImage" src="" alt="證照放大圖" class="max-h-[65vh] w-auto object-contain">
+            </div>
+
+            <!-- Modal Footer Note -->
+            <div class="mt-3 pt-2 border-t border-sky-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs text-slate-300 font-mono">
+                <p id="modalDescription" class="truncate max-w-xl text-slate-400"></p>
+                <button onclick="closeCertModal()" class="self-end sm:self-auto px-4 py-1.5 rounded-lg bg-sky-500/20 border border-sky-400/40 text-sky-300 hover:bg-sky-400/30 transition">
+                    關閉視窗 (Close)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE JAVASCRIPT -->
+    <script>
+        /**
+         * Certificate Lightbox Modal Controller
+         */
+        function openCertModal(title, imageSrc, description) {
+            const modal = document.getElementById('certModal');
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalImage').src = imageSrc;
+            document.getElementById('modalDescription').textContent = description || '';
+
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.classList.add('opacity-100');
+            document.body.style.overflow = 'hidden'; // 防止背景滾動
+        }
+
+        function closeCertModal() {
+            const modal = document.getElementById('certModal');
+            modal.classList.remove('opacity-100');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            document.body.style.overflow = '';
+        }
+
+        // 點擊背景空白處關閉對話框
+        document.getElementById('certModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCertModal();
+            }
+        });
+
+        // 按 Esc 鍵關閉對話框
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeCertModal();
+            }
+        });
+
+        /**
+         * Clipboard helper function with iframe safety fallback
+         */
+        function copyToClipboard(text, successMsg) {
+            try {
+                // Temporary textarea element creation
+                const tempInput = document.createElement("textarea");
+                tempInput.value = text;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                tempInput.setSelectionRange(0, 99999); // Mobile compatibility
+                
+                const copySuccess = document.execCommand("copy");
+                document.body.removeChild(tempInput);
+
+                if (copySuccess) {
+                    showToast(successMsg || "已成功複製到剪貼簿！");
+                } else {
+                    showToast("複製失敗，請手動複製");
+                }
+            } catch (err) {
+                showToast("複製失敗，請手動複製");
+            }
+        }
+
+        /**
+         * Custom Toast Notification system
+         */
+        let toastTimeout;
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            const toastMsg = document.getElementById("toast-message");
+            
+            toastMsg.textContent = message;
+            
+            // Clear existing timeout
+            if (toastTimeout) clearTimeout(toastTimeout);
+            
+            // Show Toast
+            toast.classList.remove("translate-y-[-100px]", "opacity-0");
+            toast.classList.add("translate-y-0", "opacity-100");
+            
+            // Hide Toast after 2.5s
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove("translate-y-0", "opacity-100");
+                toast.classList.add("translate-y-[-100px]", "opacity-0");
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
