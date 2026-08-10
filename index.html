@@ -213,14 +213,23 @@
 
         <!-- PROFESSIONAL CERTIFICATIONS SECTION (替換原本的數據卡片) -->
         <section class="space-y-3">
-            <div class="flex items-center space-x-3 px-1">
-                <div class="p-2 rounded-lg bg-amber-400/15 text-amber-300 border border-amber-400/30">
-                    <i class="fa-solid fa-award text-base"></i>
+            <div class="flex flex-wrap items-center justify-between gap-3 px-1">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2 rounded-lg bg-amber-400/15 text-amber-300 border border-amber-400/30">
+                        <i class="fa-solid fa-award text-base"></i>
+                    </div>
+                    <h2 class="text-xl font-black text-white tracking-wide">專業證照與資格認證 (Certifications & Licenses)</h2>
                 </div>
-                <h2 class="text-xl font-black text-white tracking-wide">專業證照與資格認證 (Certifications & Licenses)</h2>
+                <!-- 新增證照與說明按鈕 -->
+                <button onclick="openAddCertModal()" 
+                        class="px-3.5 py-1.5 rounded-xl bg-amber-400/20 border border-amber-400/50 text-amber-300 hover:bg-amber-400 hover:text-slate-950 transition-all duration-300 font-mono text-xs font-bold flex items-center space-x-1.5 shadow-[0_0_15px_rgba(255,183,3,0.2)] hover:shadow-[0_0_20px_rgba(255,183,3,0.5)]">
+                    <i class="fa-solid fa-plus text-xs"></i>
+                    <span>新增證照</span>
+                </button>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <!-- 證照卡片容器 (加 ID 供動態新增) -->
+            <div id="certGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <!-- Certificate 1 -->
                 <div onclick="openCertModal('EHS 甲級廢棄物清理專業技術人員 / 工安證照', 'https://placehold.co/1200x850/061221/00b4d8?text=Certificate+01+%E8%AD%89%E7%85%A7%E6%94%BE%E5%A4%A7%E9%A0%90%E8%A6%BD', '勞動部 / 環保署 • 具備職業安全與廢棄物處置管理專業資格')" 
                      class="glass-panel glass-panel-interactive rounded-2xl p-4 flex flex-col justify-between cursor-pointer group relative overflow-hidden">
@@ -334,13 +343,13 @@
             </a>
 
             <!-- Button 2: Project 02 -->
-            <a href="https://jacklo071130.github.io/spacewar-game/index.html" 
+            <a href="#" 
                target="_blank" 
                rel="noopener noreferrer" 
                class="flex items-center justify-between px-4 py-3 rounded-xl bg-gradient-to-r from-sky-500/15 via-slate-900 to-amber-500/15 border border-sky-400/40 hover:border-amber-400 text-sky-300 hover:text-amber-300 transition-all duration-300 shadow-[0_0_15px_rgba(0,180,216,0.15)] hover:shadow-[0_0_25px_rgba(255,183,3,0.35)] group">
                 <div class="flex items-center space-x-2.5 truncate">
                     <i class="fa-solid fa-diagram-project text-sky-400 text-base group-hover:scale-110 transition-transform"></i>
-                    <span class="font-mono text-xs sm:text-sm font-bold tracking-wide truncate">太空小蜜蜂 (小遊戲)</span>
+                    <span class="font-mono text-xs sm:text-sm font-bold tracking-wide truncate">專案作品 02 (點擊替換)</span>
                 </div>
                 <i class="fa-solid fa-arrow-up-right-from-square text-xs text-sky-400 group-hover:text-amber-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform ml-2"></i>
             </a>
@@ -669,6 +678,64 @@
         </div>
     </div>
 
+    <!-- ADD CERTIFICATE MODAL (新增證照與說明對話框) -->
+    <div id="addCertModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="relative w-full max-w-lg glass-panel rounded-3xl p-5 sm:p-7 border border-amber-400/50 shadow-[0_0_50px_rgba(255,183,3,0.25)] space-y-4">
+            
+            <div class="flex items-center justify-between pb-3 border-b border-amber-400/30">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-circle-plus text-amber-400 text-lg"></i>
+                    <h3 class="text-lg font-bold text-white">新增專業證照與說明</h3>
+                </div>
+                <button onclick="closeAddCertModal()" class="w-8 h-8 rounded-full bg-slate-900 border border-amber-400/40 text-amber-300 hover:bg-amber-400 hover:text-slate-950 transition flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="space-y-3 font-mono text-xs text-slate-200">
+                <div>
+                    <label class="block mb-1 text-sky-300 font-semibold">證照名稱 *</label>
+                    <input type="text" id="newCertTitle" placeholder="例如：職業安全衛生業務主管" 
+                           class="w-full bg-slate-950/80 border border-sky-500/30 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-amber-400 transition">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block mb-1 text-sky-300 font-semibold">分類 / 代號</label>
+                        <input type="text" id="newCertCategory" placeholder="例如：Cert 04 / 安衛專長" 
+                               class="w-full bg-slate-950/80 border border-sky-500/30 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-amber-400 transition">
+                    </div>
+                    <div>
+                        <label class="block mb-1 text-sky-300 font-semibold">發照 / 認證機構</label>
+                        <input type="text" id="newCertIssuer" placeholder="例如：勞動部職業安全衛生署" 
+                               class="w-full bg-slate-950/80 border border-sky-500/30 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-amber-400 transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block mb-1 text-sky-300 font-semibold">證照圖片網址 (URL)</label>
+                    <input type="text" id="newCertImgUrl" placeholder="留空將自動生成樣式占位圖..." 
+                           class="w-full bg-slate-950/80 border border-sky-500/30 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-amber-400 transition">
+                </div>
+
+                <div>
+                    <label class="block mb-1 text-sky-300 font-semibold">詳細說明 (點開放大時顯示)</label>
+                    <textarea id="newCertDesc" rows="3" placeholder="請輸入證照內容摘要或專業認證細節..." 
+                              class="w-full bg-slate-950/80 border border-sky-500/30 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-amber-400 transition resize-none"></textarea>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end space-x-3 pt-3 border-t border-sky-500/20">
+                <button onclick="closeAddCertModal()" class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-700 text-slate-300 hover:bg-slate-800 transition font-mono text-xs">
+                    取消 (Cancel)
+                </button>
+                <button onclick="saveNewCert()" class="px-5 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold transition font-mono text-xs shadow-[0_0_15px_rgba(255,183,3,0.4)]">
+                    儲存新增 (Save)
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- INTERACTIVE JAVASCRIPT -->
     <script>
         /**
@@ -692,17 +759,105 @@
             document.body.style.overflow = '';
         }
 
+        /**
+         * Add New Certificate Modal Controller
+         */
+        function openAddCertModal() {
+            const modal = document.getElementById('addCertModal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.classList.add('opacity-100');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAddCertModal() {
+            const modal = document.getElementById('addCertModal');
+            modal.classList.remove('opacity-100');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            document.body.style.overflow = '';
+        }
+
+        let certCount = 3;
+        function saveNewCert() {
+            const title = document.getElementById('newCertTitle').value.trim();
+            let category = document.getElementById('newCertCategory').value.trim();
+            const issuer = document.getElementById('newCertIssuer').value.trim() || '專業認證機構';
+            let imgUrl = document.getElementById('newCertImgUrl').value.trim();
+            const desc = document.getElementById('newCertDesc').value.trim() || '專業資格與技術認證證明文件';
+
+            if (!title) {
+                showToast("請填寫證照名稱");
+                return;
+            }
+
+            certCount++;
+            if (!category) {
+                category = `Cert 0${certCount} / 專業證照`;
+            }
+            if (!imgUrl) {
+                const encodedTitle = encodeURIComponent(title);
+                imgUrl = `https://placehold.co/1200x850/061221/ffb703?text=${encodedTitle}`;
+            }
+
+            // 動態創建證照卡片
+            const grid = document.getElementById('certGrid');
+            const newCard = document.createElement('div');
+            newCard.className = 'glass-panel glass-panel-interactive rounded-2xl p-4 flex flex-col justify-between cursor-pointer group relative overflow-hidden';
+            
+            // 安全跳脫單引號
+            const safeTitle = title.replace(/'/g, "\\'");
+            const safeImgUrl = imgUrl.replace(/'/g, "\\'");
+            const safeDesc = desc.replace(/'/g, "\\'");
+
+            newCard.setAttribute('onclick', `openCertModal('${safeTitle}', '${safeImgUrl}', '${safeDesc}')`);
+
+            newCard.innerHTML = `
+                <div class="space-y-3">
+                    <div class="relative w-full h-36 rounded-xl overflow-hidden bg-slate-950 border border-sky-400/30 group-hover:border-amber-400/60 transition">
+                        <img src="${imgUrl}" alt="${title} 預覽" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.onerror=null; this.src='https://placehold.co/600x400/061221/ffb703?text=Certificate+Image';">
+                        <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2 text-amber-300">
+                            <i class="fa-solid fa-magnifying-glass-plus text-xl"></i>
+                            <span class="text-xs font-mono font-bold">點擊放大檢視</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-[11px] font-mono text-amber-400 uppercase tracking-wider">${category}</div>
+                        <h3 class="text-base font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-1">${title}</h3>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-sky-500/20 flex items-center justify-between text-xs text-slate-300 font-mono">
+                    <span>${issuer}</span>
+                    <span class="text-amber-400 group-hover:translate-x-1 transition-transform">
+                        檢視 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </span>
+                </div>
+            `;
+
+            grid.appendChild(newCard);
+
+            // 清空輸入欄位
+            document.getElementById('newCertTitle').value = '';
+            document.getElementById('newCertCategory').value = '';
+            document.getElementById('newCertIssuer').value = '';
+            document.getElementById('newCertImgUrl').value = '';
+            document.getElementById('newCertDesc').value = '';
+
+            closeAddCertModal();
+            showToast("成功新增證照卡片！");
+        }
+
         // 點擊背景空白處關閉對話框
         document.getElementById('certModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeCertModal();
-            }
+            if (e.target === this) closeCertModal();
+        });
+        document.getElementById('addCertModal').addEventListener('click', function(e) {
+            if (e.target === this) closeAddCertModal();
         });
 
         // 按 Esc 鍵關閉對話框
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeCertModal();
+                closeAddCertModal();
             }
         });
 
