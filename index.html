@@ -263,7 +263,7 @@
                 </div>
 
                 <!-- Certificate 2 -->
-                <div onclick="openCertModal('Gemini Certified Faculty / AI證照', 'https://api.accredible.com/v1/frontend/credential_website_embed_image/certificate/191065904?key=859997e6b8ddaf6c34e5215eb824b748732cb0e924eec34a54c9fff88d98d532', 'Google • A Google Certified Gemini Faculty member can articulate and demonstrate foundational knowledge of generative AI concepts and the core features and capabilities of Gemini within the educational context.')" 
+                <div onclick="openCertModal('Gemini Certified Faculty / AI證照', 'https://api.accredible.com/v1/frontend/credential_website_embed_image/certificate/191065904', 'Google • A Google Certified Gemini Faculty member can articulate and demonstrate foundational knowledge of generative AI concepts and the core features and capabilities of Gemini within the educational context.')" 
                      class="glass-panel glass-panel-interactive rounded-2xl p-4 flex flex-col justify-between cursor-pointer group relative overflow-hidden">
                     
                     <div class="space-y-3">
@@ -327,20 +327,28 @@
                 </div>
                 
                 <!-- Certificate 4 -->
-                 <div class="glass-panel glass-panel-interactive rounded-2xl p-4 flex flex-col justify-between cursor-pointer group relative overflow-hidden" onclick="openCertModal('MOS word', 'https://placehold.co/1200x850/061221/ffb703?text=MOS%20word', '專業word大師')">
+                 <div class="glass-panel glass-panel-interactive rounded-2xl p-4 flex flex-col justify-between cursor-pointer group relative overflow-hidden" 
+                      onclick="openCertModal('MOS word', 'https://placehold.co/1200x850/061221/ffb703?text=MOS%20word', '專業word大師')">
                   <div class="space-y-3">
+                    <!-- Preview Thumbnail -->
                     <div class="relative w-full h-36 rounded-xl overflow-hidden bg-slate-950 border border-sky-400/30 group-hover:border-amber-400/60 transition">
-                        <img src="https://placehold.co/1200x850/061221/ffb703?text=MOS%20word" alt="MOS word 預覽" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.onerror=null; this.src='https://placehold.co/600x400/061221/ffb703?text=Certificate+Image';">
+                        <img src="https://placehold.co/1200x850/061221/ffb703?text=MOS%20word" 
+                            alt="MOS word 預覽" 
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        
+                        <!-- Hover zoom overlay -->
                         <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2 text-amber-300">
                             <i class="fa-solid fa-magnifying-glass-plus text-xl"></i>
                             <span class="text-xs font-mono font-bold">點擊放大檢視</span>
                         </div>
                     </div>
+                      
                     <div>
                         <div class="text-[11px] font-mono text-amber-400 uppercase tracking-wider">word /MOS</div>
                         <h3 class="text-base font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-1">MOS word</h3>
                     </div>
                   </div>
+                     
                   <div class="pt-3 border-t border-sky-500/20 flex items-center justify-between text-xs text-slate-300 font-mono">
                     <span>微軟</span>
                     <span class="text-amber-400 group-hover:translate-x-1 transition-transform">
