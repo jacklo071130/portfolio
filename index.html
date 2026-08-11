@@ -374,14 +374,14 @@
                 <i class="fa-solid fa-arrow-up-right-from-square text-xs text-sky-400 group-hover:text-amber-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform ml-2"></i>
             </a>
 
-            <!-- Button 2: Project 02 -->
-            <a href="#" 
+            <!-- Button 2: 太空小蜜蜂 -->
+            <a href="https://jacklo071130.github.io/spacewar-game/index.html" 
                target="_blank" 
                rel="noopener noreferrer" 
                class="flex items-center justify-between px-4 py-3 rounded-xl bg-gradient-to-r from-sky-500/15 via-slate-900 to-amber-500/15 border border-sky-400/40 hover:border-amber-400 text-sky-300 hover:text-amber-300 transition-all duration-300 shadow-[0_0_15px_rgba(0,180,216,0.15)] hover:shadow-[0_0_25px_rgba(255,183,3,0.35)] group">
                 <div class="flex items-center space-x-2.5 truncate">
                     <i class="fa-solid fa-diagram-project text-sky-400 text-base group-hover:scale-110 transition-transform"></i>
-                    <span class="font-mono text-xs sm:text-sm font-bold tracking-wide truncate">專案作品 02 (點擊替換)</span>
+                    <span class="font-mono text-xs sm:text-sm font-bold tracking-wide truncate">網頁遊戲 專案作品 (太空小蜜蜂)</span>
                 </div>
                 <i class="fa-solid fa-arrow-up-right-from-square text-xs text-sky-400 group-hover:text-amber-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform ml-2"></i>
             </a>
@@ -412,8 +412,11 @@
         </div>
 
         <!-- EXECUTIVE SUMMARY / ABOUT ME -->
-        <section class="glass-panel rounded-3xl p-6 sm:p-8 space-y-4">
-            <div class="flex items-center space-x-3 border-b border-sky-500/20 pb-4">
+        <section id="executive-summary" class="glass-panel rounded-3xl p-6 sm:p-8 space-y-4 relative overflow-hidden group">
+            <!-- 煙火畫布圖層 -->
+            <canvas id="summary-fireworks" class="absolute inset-0 pointer-events-none z-0 rounded-3xl w-full h-full"></canvas>
+
+            <div class="relative z-10 flex items-center space-x-3 border-b border-sky-500/20 pb-4">
                 <div class="p-2.5 rounded-xl bg-amber-400/15 text-amber-300 border border-amber-400/30">
                     <i class="fa-solid fa-user-gear text-lg"></i>
                 </div>
@@ -423,7 +426,7 @@
                 </div>
             </div>
 
-            <div class="text-slate-200 leading-relaxed text-sm sm:text-base space-y-3 font-normal">
+            <div class="relative z-10 text-slate-200 leading-relaxed text-sm sm:text-base space-y-3 font-normal">
                 <p>
                     具備 <strong class="text-amber-300 font-semibold">20 年跨國與大型製造業管理經驗</strong>（中國文化大學化學工程學士），專精於 <span class="text-sky-300 font-medium">PU 發泡配方研發</span>、<span class="text-sky-300 font-medium">產線自動化與排程優化</span>、<span class="text-sky-300 font-medium">精益生產（Lean Manufacturing）</span> 及 <span class="text-sky-300 font-medium">工安環保合規（EHS）</span>。
                 </p>
@@ -432,7 +435,7 @@
                 </p>
             </div>
         </section>
-
+       
         <!-- CORE COMPETENCIES -->
         <section class="space-y-4">
             <div class="flex items-center space-x-3 px-1">
