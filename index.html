@@ -135,9 +135,6 @@
         <header class="glass-panel rounded-3xl p-6 sm:p-10 relative overflow-hidden">
             <!-- Gradient Top Line with Pool Blue & Sun Yellow -->
             <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-sky-400 via-amber-400 to-sky-400"></div>
-            <div class="absolute top-3 right-4 font-mono text-[10px] text-amber-400/60 tracking-widest uppercase hidden sm:block">
-                
-            </div>
 
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <!-- Profile Identity -->
@@ -152,7 +149,6 @@
                         <div class="font-striped text-sky-400 text-xl tracking-wider uppercase opacity-90">EXECUTIVE PORTFOLIO</div>
                         <h1 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white flex items-baseline gap-3">
                             <span>羅其彥</span>
-                            
                         </h1>
                     </div>
 
@@ -169,14 +165,13 @@
                     </div>
                 </div>
 
-                <!-- Profile Photo Square Block (替換原本的按鈕區) -->
+                <!-- Profile Photo Square Block -->
                 <div class="relative group mx-auto md:mx-0 flex-shrink-0">
                     <!-- Glow effect behind photo block -->
                     <div class="absolute -inset-0.5 bg-gradient-to-r from-sky-400 via-amber-400 to-sky-400 rounded-2xl blur opacity-40 group-hover:opacity-80 transition duration-300"></div>
                     
                     <!-- Photo Box Frame -->
                     <div class="relative w-36 h-36 sm:w-40 sm:h-40 rounded-2xl overflow-hidden bg-slate-950 border border-sky-400/50 shadow-2xl flex flex-col items-center justify-center">
-                        <!-- 請將 src 替換為您的照片 URL / 檔名 -->
                         <img id="profile-photo" 
                              src="https://jacklo071130.github.io/portfolio/person.jpg" 
                              alt="羅其彥 個人照" 
@@ -188,8 +183,6 @@
                         <div class="absolute top-1 right-1 w-2.5 h-2.5 border-t-2 border-r-2 border-sky-400 pointer-events-none"></div>
                         <div class="absolute bottom-1 left-1 w-2.5 h-2.5 border-b-2 border-l-2 border-amber-400 pointer-events-none"></div>
                         <div class="absolute bottom-1 right-1 w-2.5 h-2.5 border-b-2 border-r-2 border-amber-400 pointer-events-none"></div>
-
-        
                     </div>
                 </div>
             </div>
@@ -211,7 +204,7 @@
             </div>
         </header>
 
-        <!-- PROFESSIONAL CERTIFICATIONS SECTION (替換原本的數據卡片) -->
+        <!-- PROFESSIONAL CERTIFICATIONS SECTION -->
         <section class="space-y-3">
             <div class="flex flex-wrap items-center justify-between gap-3 px-1">
                 <div class="flex items-center space-x-3">
@@ -220,7 +213,7 @@
                     </div>
                     <h2 class="text-xl font-black text-white tracking-wide">專業證照與資格認證 (Certifications & Licenses)</h2>
                 </div>
-                <!-- 新增證照與說明按鈕 -->
+                <!-- 新增證照按鈕 -->
                 <button onclick="openAddCertModal()" 
                         class="px-3.5 py-1.5 rounded-xl bg-amber-400/20 border border-amber-400/50 text-amber-300 hover:bg-amber-400 hover:text-slate-950 transition-all duration-300 font-mono text-xs font-bold flex items-center space-x-1.5 shadow-[0_0_15px_rgba(255,183,3,0.2)] hover:shadow-[0_0_20px_rgba(255,183,3,0.5)]">
                     <i class="fa-solid fa-plus text-xs"></i>
@@ -228,20 +221,22 @@
                 </button>
             </div>
 
-            <!-- 證照卡片容器 (加 ID 供動態新增) -->
+            <!-- 證照卡片容器 -->
             <div id="certGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <!-- Certificate 1 -->
-                <div onclick="openCertModal('Gemini Certified Educator / AI證照', 'https://jacklo071130.github.io/portfolio/GCE_lochiyen.png', 'Google / Gemini • A Google Certified Gemini Educator can articulate and demonstrate foundational knowledge of generative AI concepts and the core features and capabilities of Gemini within the educational context.')" 
+                <!-- Certificate 1: GCE -->
+                <div data-title="Gemini Certified Educator / Google AI 專業認證"
+                     data-img="https://jacklo071130.github.io/portfolio/GCE_lochiyen.png"
+                     data-desc="Google • A Google Certified Gemini Educator can articulate and demonstrate foundational knowledge of generative AI concepts and the core features and capabilities of Gemini within the educational context. 驗證具備生成式 AI 基礎理論、提示詞工程技巧，以及將 Google Gemini AI 工具融入工作流程與教學應用的專業能力。"
+                     onclick="openCertModalFromElement(this)" 
                      class="glass-panel glass-panel-interactive rounded-2xl p-4 flex flex-col justify-between cursor-pointer group relative overflow-hidden">
                     
                     <div class="space-y-3">
-                        <!-- Preview Thumbnail -->
                         <div class="relative w-full h-36 rounded-xl overflow-hidden bg-slate-950 border border-sky-400/30 group-hover:border-amber-400/60 transition">
                             <img src="https://jacklo071130.github.io/portfolio/GCE_lochiyen.png" 
                                  alt="GCE證照預覽" 
-                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/600x400/061221/00b4d8?text=GCE+Certificate';">
                             
-                            <!-- Hover zoom overlay -->
                             <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2 text-amber-300">
                                 <i class="fa-solid fa-magnifying-glass-plus text-xl"></i>
                                 <span class="text-xs font-mono font-bold">點擊放大檢視</span>
@@ -262,18 +257,20 @@
                     </div>
                 </div>
 
-                <!-- Certificate 2 -->
-                <div onclick="openCertModal('Gemini Certified Faculty / AI證照', 'https://jacklo071130.github.io/portfolio/GCF_lochiyen.png', 'Google • A Google Certified Gemini Faculty member can articulate and demonstrate foundational knowledge of generative AI concepts and the core features and capabilities of Gemini within the educational context.')" 
+                <!-- Certificate 2: GCF -->
+                <div data-title="Gemini Certified Faculty / Google AI 專業認證"
+                     data-img="https://jacklo071130.github.io/portfolio/GCF_lochiyen.png"
+                     data-desc="Google • A Google Certified Gemini Faculty member can articulate and demonstrate foundational knowledge of generative AI concepts and the core features and capabilities of Gemini within the educational context. 認證具備進階 AI 應用推動、跨領域問題解決及引導團隊高效運用 AI 工具之高階教練級能力。"
+                     onclick="openCertModalFromElement(this)" 
                      class="glass-panel glass-panel-interactive rounded-2xl p-4 flex flex-col justify-between cursor-pointer group relative overflow-hidden">
                     
                     <div class="space-y-3">
-                        <!-- Preview Thumbnail -->
                         <div class="relative w-full h-36 rounded-xl overflow-hidden bg-slate-950 border border-sky-400/30 group-hover:border-amber-400/60 transition">
                             <img src="https://jacklo071130.github.io/portfolio/GCF_lochiyen.png" 
                                  alt="GCF證照預覽" 
-                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/600x400/061221/ffb703?text=GCF+Certificate';">
                             
-                            <!-- Hover zoom overlay -->
                             <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2 text-amber-300">
                                 <i class="fa-solid fa-magnifying-glass-plus text-xl"></i>
                                 <span class="text-xs font-mono font-bold">點擊放大檢視</span>
@@ -281,8 +278,8 @@
                         </div>
 
                         <div>
-                            <div class="text-[11px] font-mono text-amber-400 uppercase tracking-wider">Cert 02 / Gemini Certified Faculty</div>
-                            <h3 class="text-base font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-1">Gemini Certified Faculty /Google AI</h3>
+                            <div class="text-[11px] font-mono text-amber-400 uppercase tracking-wider">Cert 02 / Google AI</div>
+                            <h3 class="text-base font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-1">Gemini Certified Faculty</h3>
                         </div>
                     </div>
 
@@ -294,18 +291,20 @@
                     </div>
                 </div>
 
-                <!-- Certificate 3 -->
-                <div onclick="openCertModal('Gemini Certified University Student / AI證照', 'https://jacklo071130.github.io/portfolio/GCUS_lochiyen.png', 'Google •  A Google-certified Gemini University student can articulate and demonstrate fundamental knowledge of generative AI concepts and Gemini's core features and capabilities in an educational context.')" 
+                <!-- Certificate 3: GCUS -->
+                <div data-title="Gemini Certified University Student / Google AI 專業認證"
+                     data-img="https://jacklo071130.github.io/portfolio/GCUS_lochiyen.png"
+                     data-desc="Google • A Google-certified Gemini University student can articulate and demonstrate fundamental knowledge of generative AI concepts and Gemini's core features and capabilities in an educational context. 證明具備精準的資訊搜集、多模態資料分析與 AI 生成技術實務操作體驗。"
+                     onclick="openCertModalFromElement(this)" 
                      class="glass-panel glass-panel-interactive rounded-2xl p-4 flex flex-col justify-between cursor-pointer group relative overflow-hidden">
                     
                     <div class="space-y-3">
-                        <!-- Preview Thumbnail -->
                         <div class="relative w-full h-36 rounded-xl overflow-hidden bg-slate-950 border border-sky-400/30 group-hover:border-amber-400/60 transition">
                             <img src="https://jacklo071130.github.io/portfolio/GCUS_lochiyen.png" 
                                  alt="GCUS證照預覽" 
-                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/600x400/061221/00b4d8?text=GCUS+Certificate';">
                             
-                            <!-- Hover zoom overlay -->
                             <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2 text-amber-300">
                                 <i class="fa-solid fa-magnifying-glass-plus text-xl"></i>
                                 <span class="text-xs font-mono font-bold">點擊放大檢視</span>
@@ -313,8 +312,8 @@
                         </div>
 
                         <div>
-                            <div class="text-[11px] font-mono text-amber-400 uppercase tracking-wider">Cert 02 / Gemini Certified University Student</div>
-                            <h3 class="text-base font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-1">Gemini Certified University Student /Google AI</h3>
+                            <div class="text-[11px] font-mono text-sky-400 uppercase tracking-wider">Cert 03 / Google AI</div>
+                            <h3 class="text-base font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-1">Gemini Certified University Student</h3>
                         </div>
                     </div>
 
@@ -326,37 +325,104 @@
                     </div>
                 </div>
                 
-                <!-- Certificate 4 -->
-                 <div class="glass-panel glass-panel-interactive rounded-2xl p-4 flex flex-col justify-between cursor-pointer group relative overflow-hidden" 
-                      onclick="openCertModal('MOS word', 'https://placehold.co/1200x850/061221/ffb703?text=MOS%20word', '專業word大師')">
-                  <div class="space-y-3">
-                    <!-- Preview Thumbnail -->
-                    <div class="relative w-full h-36 rounded-xl overflow-hidden bg-slate-950 border border-sky-400/30 group-hover:border-amber-400/60 transition">
-                        <img src="https://placehold.co/1200x850/061221/ffb703?text=MOS%20word" 
-                            alt="MOS word 預覽" 
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        
-                        <!-- Hover zoom overlay -->
-                        <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2 text-amber-300">
-                            <i class="fa-solid fa-magnifying-glass-plus text-xl"></i>
-                            <span class="text-xs font-mono font-bold">點擊放大檢視</span>
+                <!-- Certificate 4: MOS Excel Expert -->
+                <div data-title="MOS Excel Expert (Microsoft 365 Apps) 專業專家認證"
+                     data-img="https://jacklo071130.github.io/portfolio/Excel_Expert_page-0001.jpg"
+                     data-desc="Microsoft Office Specialist: Excel Expert (Microsoft 365 Apps) • 證明具備高階商業資料分析、進階函數公式運用、資料模型建構、樞紐分析與自動化流程設計之專家級專業技能。(驗證代碼: nXwa-uT4e)"
+                     onclick="openCertModalFromElement(this)" 
+                     class="glass-panel glass-panel-interactive rounded-2xl p-4 flex flex-col justify-between cursor-pointer group relative overflow-hidden">
+                    <div class="space-y-3">
+                        <div class="relative w-full h-36 rounded-xl overflow-hidden bg-slate-950 border border-sky-400/30 group-hover:border-amber-400/60 transition">
+                            <img src="https://jacklo071130.github.io/portfolio/Excel_Expert_page-0001.jpg" 
+                                 alt="Excel Expert 預覽" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/1200x850/061221/00b4d8?text=Excel+Expert';">
+                            
+                            <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2 text-amber-300">
+                                <i class="fa-solid fa-magnifying-glass-plus text-xl"></i>
+                                <span class="text-xs font-mono font-bold">點擊放大檢視</span>
+                            </div>
+                        </div>
+                          
+                        <div>
+                            <div class="text-[11px] font-mono text-amber-400 uppercase tracking-wider">Cert 04 / Microsoft MOS</div>
+                            <h3 class="text-base font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-1">MOS Excel Expert</h3>
                         </div>
                     </div>
-                      
-                    <div>
-                        <div class="text-[11px] font-mono text-amber-400 uppercase tracking-wider">word /MOS</div>
-                        <h3 class="text-base font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-1">MOS word</h3>
+                         
+                    <div class="pt-3 border-t border-sky-500/20 flex items-center justify-between text-xs text-slate-300 font-mono">
+                        <span>Microsoft</span>
+                        <span class="text-amber-400 group-hover:translate-x-1 transition-transform">
+                            檢視 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </span>
                     </div>
-                  </div>
-                     
-                  <div class="pt-3 border-t border-sky-500/20 flex items-center justify-between text-xs text-slate-300 font-mono">
-                    <span>微軟</span>
-                    <span class="text-amber-400 group-hover:translate-x-1 transition-transform">
-                        檢視 <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                    </span>
-                  </div>
-                 </div>
-                
+                </div>
+
+                <!-- Certificate 5: MOS PowerPoint Associate -->
+                <div data-title="MOS PowerPoint Associate (Microsoft 365 Apps) 專業認證"
+                     data-img="https://jacklo071130.github.io/portfolio/PowerPoint_Associate_page-0001.jpg"
+                     data-desc="Microsoft Office Specialist: PowerPoint Associate (Microsoft 365 Apps) • 證明具備專業簡報結構視覺化設計、多媒體元素整合、動態轉場效果與高階簡報管理實務能力。(驗證代碼: nXTz-DkNd)"
+                     onclick="openCertModalFromElement(this)" 
+                     class="glass-panel glass-panel-interactive rounded-2xl p-4 flex flex-col justify-between cursor-pointer group relative overflow-hidden">
+                    <div class="space-y-3">
+                        <div class="relative w-full h-36 rounded-xl overflow-hidden bg-slate-950 border border-sky-400/30 group-hover:border-amber-400/60 transition">
+                            <img src="https://jacklo071130.github.io/portfolio/PowerPoint_Associate_page-0001.jpg" 
+                                 alt="PowerPoint Associate 預覽" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/1200x850/061221/ffb703?text=PowerPoint+Associate';">
+                            
+                            <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2 text-amber-300">
+                                <i class="fa-solid fa-magnifying-glass-plus text-xl"></i>
+                                <span class="text-xs font-mono font-bold">點擊放大檢視</span>
+                            </div>
+                        </div>
+                          
+                        <div>
+                            <div class="text-[11px] font-mono text-sky-400 uppercase tracking-wider">Cert 05 / Microsoft MOS</div>
+                            <h3 class="text-base font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-1">MOS PowerPoint Associate</h3>
+                        </div>
+                    </div>
+                         
+                    <div class="pt-3 border-t border-sky-500/20 flex items-center justify-between text-xs text-slate-300 font-mono">
+                        <span>Microsoft</span>
+                        <span class="text-amber-400 group-hover:translate-x-1 transition-transform">
+                            檢視 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Certificate 6: MOS Word Expert -->
+                <div data-title="MOS Word Expert (Microsoft 365 Apps) 專業專家認證"
+                     data-img="https://jacklo071130.github.io/portfolio/Word_Expert_page-0001.jpg"
+                     data-desc="Microsoft Office Specialist: Word Expert (Microsoft 365 Apps) • 證明具備長篇專業技術文件構建、進階樣式範本規範、文件安全性管理與企業級高階文件排版專家能力。(驗證代碼: w9RP5-H9JW)"
+                     onclick="openCertModalFromElement(this)" 
+                     class="glass-panel glass-panel-interactive rounded-2xl p-4 flex flex-col justify-between cursor-pointer group relative overflow-hidden">
+                    <div class="space-y-3">
+                        <div class="relative w-full h-36 rounded-xl overflow-hidden bg-slate-950 border border-sky-400/30 group-hover:border-amber-400/60 transition">
+                            <img src="https://jacklo071130.github.io/portfolio/Word_Expert_page-0001.jpg" 
+                                 alt="Word Expert 預覽" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/1200x850/061221/00b4d8?text=Word+Expert';">
+                            
+                            <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2 text-amber-300">
+                                <i class="fa-solid fa-magnifying-glass-plus text-xl"></i>
+                                <span class="text-xs font-mono font-bold">點擊放大檢視</span>
+                            </div>
+                        </div>
+                          
+                        <div>
+                            <div class="text-[11px] font-mono text-amber-400 uppercase tracking-wider">Cert 06 / Microsoft MOS</div>
+                            <h3 class="text-base font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-1">MOS Word Expert</h3>
+                        </div>
+                    </div>
+                         
+                    <div class="pt-3 border-t border-sky-500/20 flex items-center justify-between text-xs text-slate-300 font-mono">
+                        <span>Microsoft</span>
+                        <span class="text-amber-400 group-hover:translate-x-1 transition-transform">
+                            檢視 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </span>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -380,7 +446,7 @@
                rel="noopener noreferrer" 
                class="flex items-center justify-between px-4 py-3 rounded-xl bg-gradient-to-r from-sky-500/15 via-slate-900 to-amber-500/15 border border-sky-400/40 hover:border-amber-400 text-sky-300 hover:text-amber-300 transition-all duration-300 shadow-[0_0_15px_rgba(0,180,216,0.15)] hover:shadow-[0_0_25px_rgba(255,183,3,0.35)] group">
                 <div class="flex items-center space-x-2.5 truncate">
-                    <i class="fa-solid fa-diagram-project text-sky-400 text-base group-hover:scale-110 transition-transform"></i>
+                    <i class="fa-solid fa-gamepad text-sky-400 text-base group-hover:scale-110 transition-transform"></i>
                     <span class="font-mono text-xs sm:text-sm font-bold tracking-wide truncate">網頁遊戲(太空小蜜蜂)</span>
                 </div>
                 <i class="fa-solid fa-arrow-up-right-from-square text-xs text-sky-400 group-hover:text-amber-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform ml-2"></i>
@@ -392,7 +458,7 @@
                rel="noopener noreferrer" 
                class="flex items-center justify-between px-4 py-3 rounded-xl bg-gradient-to-r from-sky-500/15 via-slate-900 to-amber-500/15 border border-sky-400/40 hover:border-amber-400 text-sky-300 hover:text-amber-300 transition-all duration-300 shadow-[0_0_15px_rgba(0,180,216,0.15)] hover:shadow-[0_0_25px_rgba(255,183,3,0.35)] group">
                 <div class="flex items-center space-x-2.5 truncate">
-                    <i class="fa-solid fa-chart-line text-amber-400 text-base group-hover:scale-110 transition-transform"></i>
+                    <i class="fa-solid fa-train text-amber-400 text-base group-hover:scale-110 transition-transform"></i>
                     <span class="font-mono text-xs sm:text-sm font-bold tracking-wide truncate">AI運用(台灣鐵道旅遊)</span>
                 </div>
                 <i class="fa-solid fa-arrow-up-right-from-square text-xs text-sky-400 group-hover:text-amber-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform ml-2"></i>
@@ -404,7 +470,7 @@
                rel="noopener noreferrer" 
                class="flex items-center justify-between px-4 py-3 rounded-xl bg-gradient-to-r from-sky-500/15 via-slate-900 to-amber-500/15 border border-sky-400/40 hover:border-amber-400 text-sky-300 hover:text-amber-300 transition-all duration-300 shadow-[0_0_15px_rgba(0,180,216,0.15)] hover:shadow-[0_0_25px_rgba(255,183,3,0.35)] group">
                 <div class="flex items-center space-x-2.5 truncate">
-                    <i class="fa-solid fa-folder-open text-sky-400 text-base group-hover:scale-110 transition-transform"></i>
+                    <i class="fa-solid fa-snowflake text-sky-400 text-base group-hover:scale-110 transition-transform"></i>
                     <span class="font-mono text-xs sm:text-sm font-bold tracking-wide truncate">網頁遊戲(雪球大戰)</span>
                 </div>
                 <i class="fa-solid fa-arrow-up-right-from-square text-xs text-sky-400 group-hover:text-amber-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform ml-2"></i>
@@ -413,8 +479,7 @@
 
         <!-- EXECUTIVE SUMMARY / ABOUT ME -->
         <section id="executive-summary" class="glass-panel rounded-3xl p-6 sm:p-8 space-y-4 relative overflow-hidden group">
-            <!-- 煙火畫布圖層 -->
-            <canvas id="summary-fireworks" class="absolute inset-0 pointer-events-none z-0 rounded-3xl w-full h-full" width="960" height="274"></canvas>
+            <canvas id="summary-fireworks" class="absolute inset-0 pointer-events-none z-0 rounded-3xl w-full h-full"></canvas>
 
             <div class="relative z-10 flex items-center space-x-3 border-b border-sky-500/20 pb-4">
                 <div class="p-2.5 rounded-xl bg-amber-400/15 text-amber-300 border border-amber-400/30">
@@ -435,7 +500,7 @@
                 </p>
             </div>
         </section>
-               
+
         <!-- CORE COMPETENCIES -->
         <section class="space-y-4">
             <div class="flex items-center space-x-3 px-1">
@@ -659,15 +724,17 @@
                         <div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/80 border border-sky-500/20 hover:border-amber-400/40 transition">
                             <span class="text-slate-400 text-xs">電話:</span>
                             <span class="text-amber-300 font-bold">0929-553-569</span>
-                            
-                                                        
+                            <button onclick="copyToClipboard('0929553569', '已複製電話號碼')" class="text-xs bg-slate-800 hover:bg-amber-400/20 text-amber-300 px-2.5 py-1 rounded border border-amber-400/40 font-semibold">
+                                複製
+                            </button>
                         </div>
 
                         <div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/80 border border-sky-500/20 hover:border-sky-400/40 transition">
                             <span class="text-slate-400 text-xs">Email:</span>
                             <span class="text-sky-300 font-bold truncate max-w-[170px] sm:max-w-none">loyemster@gmail.com</span>
-                            
-                                                       
+                            <button onclick="copyToClipboard('loyemster@gmail.com', '已複製 Email')" class="text-xs bg-slate-800 hover:bg-sky-400/20 text-sky-300 px-2.5 py-1 rounded border border-sky-400/40 font-semibold">
+                                複製
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -680,28 +747,24 @@
 
     </div>
 
-    <!-- CERTIFICATE LIGHTBOX MODAL (證照放大對話框) -->
+    <!-- CERTIFICATE LIGHTBOX MODAL -->
     <div id="certModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
         <div class="relative w-full max-w-4xl glass-panel rounded-3xl p-4 sm:p-6 border border-sky-400/50 shadow-[0_0_50px_rgba(0,180,216,0.25)] flex flex-col max-h-[90vh]">
             
-            <!-- Modal Header -->
             <div class="flex items-center justify-between pb-3 mb-3 border-b border-sky-500/30">
                 <div class="space-y-0.5">
                     <span class="text-[10px] font-mono text-amber-400 uppercase tracking-wider">CERTIFICATE VIEW</span>
                     <h3 id="modalTitle" class="text-lg sm:text-xl font-bold text-white truncate max-w-[260px] sm:max-w-xl">證照名稱</h3>
                 </div>
-                <!-- Close Button -->
                 <button onclick="closeCertModal()" class="w-9 h-9 rounded-full bg-slate-900/80 border border-amber-400/40 text-amber-300 hover:bg-amber-400 hover:text-slate-950 transition flex items-center justify-center">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
 
-            <!-- Modal Image Body -->
-            <div class="relative flex-1 overflow-hidden rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-center">
-                <img id="modalImage" src="" alt="證照放大圖" class="max-h-[65vh] w-auto object-contain">
+            <div class="relative flex-1 overflow-hidden rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-center p-2">
+                <img id="modalImage" src="" alt="證照放大圖" class="max-h-[65vh] w-auto object-contain rounded-lg" onerror="this.onerror=null; this.src='https://placehold.co/1200x850/061221/ffb703?text=Certificate+Preview';">
             </div>
 
-            <!-- Modal Footer Note -->
             <div class="mt-3 pt-2 border-t border-sky-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs text-slate-300 font-mono">
                 <p id="modalDescription" class="truncate max-w-xl text-slate-400"></p>
                 <button onclick="closeCertModal()" class="self-end sm:self-auto px-4 py-1.5 rounded-lg bg-sky-500/20 border border-sky-400/40 text-sky-300 hover:bg-sky-400/30 transition">
@@ -711,7 +774,7 @@
         </div>
     </div>
 
-    <!-- ADD CERTIFICATE MODAL (新增證照與說明對話框) -->
+    <!-- ADD CERTIFICATE MODAL -->
     <div id="addCertModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
         <div class="relative w-full max-w-lg glass-panel rounded-3xl p-5 sm:p-7 border border-amber-400/50 shadow-[0_0_50px_rgba(255,183,3,0.25)] space-y-4">
             
@@ -735,7 +798,7 @@
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block mb-1 text-sky-300 font-semibold">分類 / 代號</label>
-                        <input type="text" id="newCertCategory" placeholder="例如：Cert 04 / 安衛專長" 
+                        <input type="text" id="newCertCategory" placeholder="例如：Cert 05 / 安衛專長" 
                                class="w-full bg-slate-950/80 border border-sky-500/30 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-amber-400 transition">
                     </div>
                     <div>
@@ -782,7 +845,14 @@
 
             modal.classList.remove('opacity-0', 'pointer-events-none');
             modal.classList.add('opacity-100');
-            document.body.style.overflow = 'hidden'; // 防止背景滾動
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openCertModalFromElement(elem) {
+            const title = elem.getAttribute('data-title') || '';
+            const imageSrc = elem.getAttribute('data-img') || '';
+            const description = elem.getAttribute('data-desc') || '';
+            openCertModal(title, imageSrc, description);
         }
 
         function closeCertModal() {
@@ -809,7 +879,7 @@
             document.body.style.overflow = '';
         }
 
-        let certCount = 3;
+        let certCount = 6;
         function saveNewCert() {
             const title = document.getElementById('newCertTitle').value.trim();
             let category = document.getElementById('newCertCategory').value.trim();
@@ -831,17 +901,14 @@
                 imgUrl = `https://placehold.co/1200x850/061221/ffb703?text=${encodedTitle}`;
             }
 
-            // 動態創建證照卡片
             const grid = document.getElementById('certGrid');
             const newCard = document.createElement('div');
             newCard.className = 'glass-panel glass-panel-interactive rounded-2xl p-4 flex flex-col justify-between cursor-pointer group relative overflow-hidden';
             
-            // 安全跳脫單引號
-            const safeTitle = title.replace(/'/g, "\\'");
-            const safeImgUrl = imgUrl.replace(/'/g, "\\'");
-            const safeDesc = desc.replace(/'/g, "\\'");
-
-            newCard.setAttribute('onclick', `openCertModal('${safeTitle}', '${safeImgUrl}', '${safeDesc}')`);
+            newCard.setAttribute('data-title', title);
+            newCard.setAttribute('data-img', imgUrl);
+            newCard.setAttribute('data-desc', desc);
+            newCard.setAttribute('onclick', 'openCertModalFromElement(this)');
 
             newCard.innerHTML = `
                 <div class="space-y-3">
@@ -867,7 +934,6 @@
 
             grid.appendChild(newCard);
 
-            // 清空輸入欄位
             document.getElementById('newCertTitle').value = '';
             document.getElementById('newCertCategory').value = '';
             document.getElementById('newCertIssuer').value = '';
@@ -878,7 +944,6 @@
             showToast("成功新增證照卡片！");
         }
 
-        // 點擊背景空白處關閉對話框
         document.getElementById('certModal').addEventListener('click', function(e) {
             if (e.target === this) closeCertModal();
         });
@@ -886,7 +951,6 @@
             if (e.target === this) closeAddCertModal();
         });
 
-        // 按 Esc 鍵關閉對話框
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeCertModal();
@@ -894,17 +958,13 @@
             }
         });
 
-        /**
-         * Clipboard helper function with iframe safety fallback
-         
         function copyToClipboard(text, successMsg) {
             try {
-                // Temporary textarea element creation
                 const tempInput = document.createElement("textarea");
                 tempInput.value = text;
                 document.body.appendChild(tempInput);
                 tempInput.select();
-                tempInput.setSelectionRange(0, 99999); // Mobile compatibility
+                tempInput.setSelectionRange(0, 99999);
                 
                 const copySuccess = document.execCommand("copy");
                 document.body.removeChild(tempInput);
@@ -918,35 +978,24 @@
                 showToast("複製失敗，請手動複製");
             }
         }
-        */
 
-        /**
-         * Custom Toast Notification system
-         */
         let toastTimeout;
         function showToast(message) {
             const toast = document.getElementById("toast");
             const toastMsg = document.getElementById("toast-message");
             
             toastMsg.textContent = message;
-            
-            // Clear existing timeout
             if (toastTimeout) clearTimeout(toastTimeout);
             
-            // Show Toast
             toast.classList.remove("translate-y-[-100px]", "opacity-0");
             toast.classList.add("translate-y-0", "opacity-100");
             
-            // Hide Toast after 2.5s
             toastTimeout = setTimeout(() => {
                 toast.classList.remove("translate-y-0", "opacity-100");
                 toast.classList.add("translate-y-[-100px]", "opacity-0");
             }, 2500);
         }
 
-    /**
-         * Executive Summary Section Fireworks Effect
-         */
         (function initSummaryFireworks() {
             const section = document.getElementById('executive-summary');
             const canvas = document.getElementById('summary-fireworks');
@@ -956,7 +1005,6 @@
             let particles = [];
             let animationFrameId = null;
 
-            // 主題色彩 (湛藍、天空藍、金黃、亮琥珀、星白)
             const colors = ['#00b4d8', '#38bdf8', '#ffb703', '#f4a261', '#ffffff', '#7dd3fc'];
 
             function resizeCanvas() {
@@ -978,7 +1026,7 @@
                     this.size = Math.random() * 3 + 1.5;
                     this.color = colors[Math.floor(Math.random() * colors.length)];
                     this.alpha = 1;
-                    this.decay = Math.random() * 0.02 + 0.015; // 逐漸消逝速度
+                    this.decay = Math.random() * 0.02 + 0.015;
                     this.gravity = 0.04;
                 }
 
@@ -986,7 +1034,7 @@
                     this.x += this.vx;
                     this.y += this.vy;
                     this.vy += this.gravity;
-                    this.vx *= 0.98; // 空氣阻力
+                    this.vx *= 0.98;
                     this.vy *= 0.98;
                     this.alpha -= this.decay;
                 }
@@ -1033,7 +1081,6 @@
                 }
             }
 
-            // 滑鼠移動時連續產生微型煙火火花
             let lastMoveTime = 0;
             section.addEventListener('mousemove', function (e) {
                 const rect = section.getBoundingClientRect();
@@ -1041,13 +1088,12 @@
                 const y = e.clientY - rect.top;
 
                 const now = Date.now();
-                if (now - lastMoveTime > 35) { // 節流發射
+                if (now - lastMoveTime > 35) {
                     createFireworksBurst(x, y, 4, 0.8);
                     lastMoveTime = now;
                 }
             });
 
-            // 滑鼠進入區塊時觸發較大的煙火綻放
             section.addEventListener('mouseenter', function (e) {
                 const rect = section.getBoundingClientRect();
                 const x = e.clientX - rect.left;
