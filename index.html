@@ -426,6 +426,14 @@
             </div>
         </section>
 
+        <!-- PERSONAL PROJECTS SECTION HEADER -->
+        <div class="flex items-center space-x-3 px-1 pt-2">
+            <div class="p-2 rounded-lg bg-amber-400/15 text-amber-300 border border-amber-400/30">
+                <i class="fa-solid fa-folder-open text-base"></i>
+            </div>
+            <h2 class="text-xl font-black text-white tracking-wide">個人專案 (Personal Projects)</h2>
+        </div>
+
         <!-- EXTERNAL PROJECT LINK BUTTONS (4 BUTTONS) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <!-- Button 1: VBA CM -->
@@ -476,6 +484,94 @@
                 <i class="fa-solid fa-arrow-up-right-from-square text-xs text-sky-400 group-hover:text-amber-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform ml-2"></i>
             </a>
         </div>
+
+        <!-- FEATURED PROJECT SECTION: 台灣鐵道漫遊 AI 旅遊規劃專家 -->
+        <section class="glass-panel glass-panel-interactive rounded-3xl p-6 sm:p-8 relative overflow-hidden group space-y-6">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-amber-400 via-sky-400 to-amber-400"></div>
+
+            <!-- 標頭列與直接體驗按鈕 -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-sky-500/20 pb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2.5 rounded-xl bg-amber-400/15 text-amber-300 border border-amber-400/30 shrink-0">
+                        <i class="fa-solid fa-train-subway text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-mono text-amber-400 uppercase tracking-widest block">個人專案 • FEATURED AI PROJECT</span>
+                        <h2 class="text-xl sm:text-2xl font-black text-white tracking-wide">台灣鐵道漫遊 AI 旅遊規劃專家</h2>
+                    </div>
+                </div>
+
+                <a href="https://railway-travel01.onrender.com/" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-bold text-xs sm:text-sm transition-all duration-300 shadow-[0_0_20px_rgba(255,183,3,0.3)] hover:shadow-[0_0_25px_rgba(255,183,3,0.6)] flex items-center justify-center space-x-2 shrink-0">
+                    <span>前往體驗專案</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                </a>
+            </div>
+
+            <!-- 主內容區域：圖片縮圖 + 專案特色說明 -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                
+                <!-- 左側：圖片縮圖與互動點擊放大功能 -->
+                <div class="lg:col-span-5 relative group/img cursor-pointer" 
+                     onclick="openCertModal('台灣鐵道漫遊 AI 旅遊規劃專家', 'image_d546b7.jpg', '這是一個台灣旅遊互動網頁程式，可選擇火車站的起點及目的地。並可利用 AI 產生車站附近的一日旅遊景點及美食，且有一鍵生成詳細行程表與交通轉乘指南的功能及利用 Google Maps 的導航功能，讓旅客輕鬆暢遊全台各景點。')">
+                    
+                    <div class="absolute -inset-1 bg-gradient-to-r from-sky-400 via-amber-400 to-sky-400 rounded-2xl blur opacity-30 group-hover/img:opacity-75 transition duration-500"></div>
+                    
+                    <div class="relative rounded-2xl overflow-hidden bg-slate-950 border border-sky-400/40 group-hover/img:border-amber-400 transition duration-300 aspect-[4/3] flex items-center justify-center">
+                        <img src="image_d546b7.jpg" 
+                             alt="台灣鐵道漫遊 AI 旅遊規劃專家 畫面預覽" 
+                             class="w-full h-full object-cover object-top group-hover/img:scale-105 transition-transform duration-500"
+                             onerror="this.onerror=null; this.src='https://placehold.co/800x600/061221/00b4d8?text=Taiwan+Railway+AI+Travel';">
+                        
+                        <!-- 懸浮提示 Hover Effect -->
+                        <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center space-x-2 text-amber-300">
+                            <i class="fa-solid fa-magnifying-glass-plus text-2xl"></i>
+                            <span class="text-xs font-mono font-bold">點擊放大檢視全圖</span>
+                        </div>
+
+                        <!-- 頂部科技 Tag 標籤 -->
+                        <div class="absolute top-3 left-3 bg-slate-950/85 backdrop-blur-md px-2.5 py-1 rounded-lg border border-sky-400/30 text-[11px] font-mono text-sky-300 shadow-lg">
+                            <i class="fa-solid fa-robot mr-1 text-amber-400"></i>Gemini AI + Google Maps API
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右側：文字介紹與亮點解析 -->
+                <div class="lg:col-span-7 space-y-4">
+                    <p class="text-slate-200 text-sm sm:text-base leading-relaxed">
+                        這是一個台灣旅遊互動網頁程式，可選擇火車站的起點及目的地。並可利用 AI 產生車站附近的一日旅遊景點及美食，且有一鍵生成詳細行程表與交通轉乘指南的功能及利用 Google Maps 的導航功能，讓旅客輕鬆暢遊全台各景點。
+                    </p>
+
+                    <!-- 開發心得與經驗總結 -->
+                    <div class="p-4 rounded-xl bg-slate-950/80 border border-amber-400/40 space-y-2 shadow-[0_0_15px_rgba(255,183,3,0.1)]">
+                        <div class="flex items-center space-x-2 text-amber-300 font-bold text-xs sm:text-sm">
+                            <i class="fa-solid fa-lightbulb text-amber-400 text-base"></i>
+                            <span>開發中學到的一件事：</span>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed pl-3 border-l-2 border-amber-400/60">
+                            學習到 API 的後端重要性，並把 Key 放在後端避免發生不可預期的災難。以及如何分段式與 AI 溝通來處理修改問題，使 AI 不至於因為一次接收太多指令而產生做 A 漏 B 的情況。
+                        </p>
+                    </div>
+
+                    <!-- 網頁標籤連結 -->
+                    <div class="pt-2 flex flex-wrap items-center gap-2">
+                        <a href="https://railway-travel01.onrender.com/" target="_blank" rel="noopener noreferrer"
+                           class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-xl bg-sky-500/15 hover:bg-sky-500/25 border border-sky-400/40 text-sky-300 font-mono text-xs font-semibold transition-all">
+                            <i class="fa-solid fa-globe"></i>
+                            <span class="truncate">https://railway-travel01.onrender.com/</span>
+                        </a>
+                        <a href="https://github.com/jacklo071130/railway-travel" target="_blank" rel="noopener noreferrer"
+                           class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-400/40 text-amber-300 font-mono text-xs font-semibold transition-all">
+                            <i class="fa-brands fa-github text-sm"></i>
+                            <span class="truncate">GitHub Repo</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
 
         <!-- EXECUTIVE SUMMARY / ABOUT ME -->
         <section id="executive-summary" class="glass-panel rounded-3xl p-6 sm:p-8 space-y-4 relative overflow-hidden group">
